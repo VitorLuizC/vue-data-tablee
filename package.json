@@ -1,0 +1,26 @@
+{
+  "name": "vue-data-tablee",
+  "version": "0.0.0",
+  "description": "A very simple table component.",
+  "main": "dist/vue-data-tablee.common.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VitorLuizC/vue-data-tablee.git"
+  },
+  "keywords": [
+    "data-tablee",
+    "data-table",
+    "data-grid",
+    "table",
+    "vue"
+  ],
+  "author": "Vitor Cavalcanti",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/VitorLuizC/vue-data-tablee/issues"
+  },
+  "homepage": "https://github.com/VitorLuizC/vue-data-tablee#readme"
+}
