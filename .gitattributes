@@ -1,0 +1,5 @@
+# Handle sources as text and force Unix line endings
+* text=auto eol=lf
+
+# Disable diff for lock file
+package-lock.json -diff
