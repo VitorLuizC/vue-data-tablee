@@ -1,5 +1,5 @@
 /*!
- * vue-data-tablee v0.0.0
+ * vue-data-tablee v0.1.0
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
