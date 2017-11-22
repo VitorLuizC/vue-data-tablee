@@ -3,10 +3,6 @@
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
-
 /**
  * Check value's constructor name.
  * @param {*} value
@@ -77,6 +73,5 @@ var install = function (Vue) {
   Vue.component('DataTablee', DataTablee);
 };
 
-exports.install = install;
-exports.DataTablee = DataTablee;
-exports['default'] = install;
+export { install, DataTablee };
+export default install;

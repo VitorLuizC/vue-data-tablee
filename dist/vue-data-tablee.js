@@ -3,9 +3,11 @@
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
-'use strict';
-
-Object.defineProperty(exports, '__esModule', { value: true });
+(function (global, factory) {
+	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
+	typeof define === 'function' && define.amd ? define(['exports'], factory) :
+	(factory((global.vueDataTablee = {})));
+}(this, (function (exports) { 'use strict';
 
 /**
  * Check value's constructor name.
@@ -80,3 +82,7 @@ var install = function (Vue) {
 exports.install = install;
 exports.DataTablee = DataTablee;
 exports['default'] = install;
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+})));
