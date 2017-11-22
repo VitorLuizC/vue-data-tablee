@@ -1,6 +1,6 @@
 {
   "name": "vue-data-tablee",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A very simple table component.",
   "main": "dist/vue-data-tablee.common.js",
   "module": "dist/vue-data-tablee.es.js",
@@ -40,7 +40,6 @@
     "autoprefixer": "^7.1.6",
     "bili": "^0.18.2",
     "poi": "^9.5.2",
-    "postcss-css-variables": "^0.8.0",
     "postcss-nested": "^2.1.2",
     "rollup-plugin-vue": "^2.5.2",
     "standard": "^10.0.3",

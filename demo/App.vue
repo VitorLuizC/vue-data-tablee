@@ -36,3 +36,9 @@
   }
 
 </script>
+
+<style>
+  :root
+    --data-tablee-border-color: red
+    --data-tablee-cell-padding: 15px
+</style>

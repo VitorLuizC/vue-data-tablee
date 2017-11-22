@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import App from './App'
-import DataTablee from '../src'
+import DataTablee from '../'
+import '../dist/vue-data-tablee.css'
 
 Vue.use(DataTablee, { name: 'DataTable' })
 

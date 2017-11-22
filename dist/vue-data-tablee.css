@@ -91,12 +91,10 @@
 }
 
 .data-tablee-cell {
-  padding: 12px;
   padding: var(--data-tablee-cell-padding);
 }
 
 .data-tablee-cell.-header {
-    border-bottom: 1px solid #000;
     border-bottom: 1px solid var(--data-tablee-border-color);
 }
 
