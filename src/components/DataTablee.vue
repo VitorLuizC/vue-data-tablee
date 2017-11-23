@@ -5,7 +5,9 @@
         v-for="(col, index) in cols"
         :key="index"
         class="cell data-tablee-cell -header"
-      >{{ getLabel(col, 'label') }}</th>
+      >
+        <span class="text">{{ getText(col, 'label') }}</span>
+      </th>
     </tr>
 
     <tr
@@ -17,7 +19,9 @@
         v-for="(col, index) in cols"
         :key="index"
         class="cell data-tablee-cell -content"
-      >{{ getLabel(row, col.field) }}</td>
+      >
+        <span class="text">{{ getText(row, col.field) }}</span>
+      </td>
     </tr>
   </table>
 </template>
@@ -34,7 +38,7 @@
         type: Array,
         required: true,
         validator: (cols) => {
-          const isValid = cols.length && cols.every((col) => is(col, 'Object'))
+          const isValid = cols.every((col) => is(col, 'Object'))
           return isValid
         }
       },
@@ -44,7 +48,11 @@
        */
       rows: {
         type: Array,
-        required: true
+        required: true,
+        validator: (rows) => {
+          const isValid = rows.every((row) => is(row, 'Object'))
+          return isValid
+        }
       },
 
       /**
@@ -55,16 +63,14 @@
         default: ''
       }
     },
-
     methods: {
-
       /**
        * Get value's label.
        * @param {*} value
        * @param {string} field
        * @returns {string}
        */
-      getLabel (value, field) {
+      getText (value, field) {
         const label = field.split('.').reduce((value, field) => {
           if (is(value, 'Object') && value.hasOwnProperty(field))
             return value[field]
@@ -78,13 +84,7 @@
 
 <style>
   :root
-    /**
-     * Table definitions.
-     */
     --data-tablee-border-color: #000
-    /**
-     * Cell definitions.
-     */
     --data-tablee-cell-padding: 12px
 
   .data-tablee

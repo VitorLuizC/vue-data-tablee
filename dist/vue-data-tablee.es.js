@@ -14,7 +14,7 @@ var is = function (value, constructor) {
   return is
 };
 
-var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"data-tablee"},[_c('tr',{staticClass:"row data-tablee-row -header"},_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,staticClass:"cell data-tablee-cell -header"},[_vm._v(_vm._s(_vm.getLabel(col, 'label')))])})),_vm._v(" "),_vm._l((_vm.rows),function(row,index){return _c('tr',{key:index,staticClass:"row data-tablee-row -content"},_vm._l((_vm.cols),function(col,index){return _c('td',{key:index,staticClass:"cell data-tablee-cell -content"},[_vm._v(_vm._s(_vm.getLabel(row, col.field)))])}))})],2)},staticRenderFns: [],
+var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"data-tablee"},[_c('tr',{staticClass:"row data-tablee-row -header"},_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,staticClass:"cell data-tablee-cell -header"},[_c('span',{staticClass:"text"},[_vm._v(_vm._s(_vm.getText(col, 'label')))])])})),_vm._v(" "),_vm._l((_vm.rows),function(row,index){return _c('tr',{key:index,staticClass:"row data-tablee-row -content"},_vm._l((_vm.cols),function(col,index){return _c('td',{key:index,staticClass:"cell data-tablee-cell -content"},[_c('span',{staticClass:"text"},[_vm._v(_vm._s(_vm.getText(row, col.field)))])])}))})],2)},staticRenderFns: [],
   props: {
     /**
      * List of col's data.
@@ -23,7 +23,7 @@ var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       type: Array,
       required: true,
       validator: function (cols) {
-        var isValid = cols.length && cols.every(function (col) { return is(col, 'Object'); });
+        var isValid = cols.every(function (col) { return is(col, 'Object'); });
         return isValid
       }
     },
@@ -33,7 +33,11 @@ var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
      */
     rows: {
       type: Array,
-      required: true
+      required: true,
+      validator: function (rows) {
+        var isValid = rows.every(function (row) { return is(row, 'Object'); });
+        return isValid
+      }
     },
 
     /**
@@ -44,16 +48,14 @@ var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       default: ''
     }
   },
-
   methods: {
-
     /**
      * Get value's label.
      * @param {*} value
      * @param {string} field
      * @returns {string}
      */
-    getLabel: function getLabel (value, field) {
+    getText: function getText (value, field) {
       var label = field.split('.').reduce(function (value, field) {
         if (is(value, 'Object') && value.hasOwnProperty(field))
           { return value[field] }

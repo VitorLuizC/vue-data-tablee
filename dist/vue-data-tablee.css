@@ -77,12 +77,14 @@
 
 
 
+
+
+
+
+
+
 :root {
-  /**
-   * Table definitions. */
   --data-tablee-border-color: #000;
-  /**
-   * Cell definitions. */
   --data-tablee-cell-padding: 12px;
 }
 
