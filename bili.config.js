@@ -4,7 +4,6 @@ module.exports = {
   compress: 'umd',
   plugins: ['vue'],
   vue: {
-    css: `dist/vue-data-tablee.css`,
-    cssSourceMap: false
+    css: `dist/vue-data-tablee.css`
   }
 }
