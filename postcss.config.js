@@ -1,5 +1,4 @@
 module.exports = {
-  parser: 'sugarss',
   plugins: {
     'cssnano': {},
     'postcss-nested': {},

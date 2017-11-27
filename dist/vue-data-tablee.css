@@ -1,1 +1,0 @@
-:root{--data-tablee-border-color:#000;--data-tablee-cell-padding:12px}.data-tablee{border-spacing:0}.data-tablee-cell{padding:var(--data-tablee-cell-padding);}.data-tablee-cell.-header{border-bottom:1px solid var(--data-tablee-border-color)}.data-tablee-cell.-header.-sortable{cursor:pointer}

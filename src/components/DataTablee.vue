@@ -1,20 +1,21 @@
 <template>
   <table class="data-tablee">
-    <tr class="row data-tablee-row -header">
+    <tr class="data-tablee-row -header">
       <th
         v-for="(col, index) in cols"
         :key="index"
         :class="getClasses(index, 'header')"
         @click="sortCol(index)"
       >
-        <span class="text">{{ col.label || empty }}</span>
+        <span class="data-tablee-text">{{ col.label || empty }}</span>
 
         <slot
           name="sort-icon"
           :sortment="sortment"
           :sorted="index === sorter"
+          :arrow="getArrow(index)"
         >
-          <span class="icon">{{ index !== sorter ? '' : sortment === 'ascending' ? '↓' : '↑' }}</span>
+          <span class="data-tablee-icon">{{ getArrow(index) }}</span>
         </slot>
       </th>
     </tr>
@@ -22,14 +23,14 @@
     <tr
       v-for="(row, index) in sorted"
       :key="index"
-      class="row data-tablee-row -content"
+      class="data-tablee-row -content"
     >
       <td
         v-for="(field, index) in row"
         :key="index"
         :class="getClasses(index, 'content')"
       >
-        <span class="text">{{ field || empty }}</span>
+        <span class="data-tablee-text">{{ field || empty }}</span>
       </td>
     </tr>
   </table>
@@ -113,6 +114,19 @@
       },
 
       /**
+       * Get column arrow's.
+       * @param {number} index
+       * @returns {('▼'|'▲'|'')}
+       */
+      getArrow (index) {
+        const isSorting = index === this.sorter
+        if (!isSorting)
+          return '▲'
+        const arrow = this.sortment === 'ascending' ? '▲' : '▼'
+        return arrow
+      },
+
+      /**
        * Get cell's classes.
        * @param {number} index
        * @param {('header'|'content')} type
@@ -163,20 +177,3 @@
     }
   }
 </script>
-
-<style>
-  :root
-    --data-tablee-border-color: #000
-    --data-tablee-cell-padding: 12px
-
-  .data-tablee
-    border-spacing: 0
-
-  .data-tablee-cell
-    padding: var(--data-tablee-cell-padding)
-
-    &.-header
-      border-bottom: 1px solid var(--data-tablee-border-color)
-    &.-header.-sortable
-      cursor: pointer
-</style>
