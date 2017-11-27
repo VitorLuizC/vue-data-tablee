@@ -40,7 +40,7 @@
     "autoprefixer": "^7.1.6",
     "bili": "^0.18.2",
     "cssnano": "^3.10.0",
-    "poi": "^9.5.2",
+    "poi": "^9.5.4",
     "postcss-nested": "^2.1.2",
     "rollup-plugin-vue": "^2.5.2",
     "standard": "^10.0.3",
