@@ -3,7 +3,7 @@
     "id": "47d82949-c373-4909-a55b-945387c5481c",
     "name": "Lucky Huggan",
     "email": "lhuggan0@topsy.com",
-    "gender": null,
+    "gender": 1120,
     "birth_date": "1984-01-10",
     "address": {
       "country": "United States",
@@ -48,7 +48,7 @@
     "id": "a6ebf9ee-3cc5-4384-b73c-594a79207774",
     "name": "Lyman Haxley",
     "email": "lhaxley3@newyorker.com",
-    "gender": null,
+    "gender": 10,
     "birth_date": "1972-12-29",
     "address": {
       "country": "United States",
@@ -153,7 +153,7 @@
     "id": "d85df432-5267-4662-856e-435b1973dc3a",
     "name": "Dinah Lanphere",
     "email": "dlanpherea@youtube.com",
-    "gender": null,
+    "gender": 120,
     "birth_date": "1967-05-30",
     "address": {
       "country": "United States",
@@ -198,7 +198,7 @@
     "id": "fde0a51a-4a6b-4663-8d5a-9a03535f1703",
     "name": "Blakeley Wathey",
     "email": "bwatheyd@nytimes.com",
-    "gender": null,
+    "gender": "120% Male",
     "birth_date": "1982-10-17",
     "address": {
       "country": "United States",
@@ -363,7 +363,7 @@
     "id": "5520166b-089c-4ba4-b496-d455be8c5b8f",
     "name": "Elmira Tower",
     "email": "etowero@omniture.com",
-    "gender": null,
+    "gender": 120,
     "birth_date": "1970-03-22",
     "address": {
       "country": "United States",

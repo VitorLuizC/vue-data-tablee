@@ -1,9 +1,19 @@
 <template>
-  <data-tablee
-    :rows="rows"
-    :cols="cols"
-    empty="-"
-  />
+  <section>
+    <data-tablee
+      :rows="rows"
+      :cols="cols"
+    />
+    <data-tablee
+      :rows="rows"
+      :cols="cols"
+      empty="-"
+    >
+      <span slot="sort-icon" slot-scope="{ sortment, sorted }">
+        {{ !sorted ? '' : sortment === 'descending' ? '\\/' : '/\\' }}
+      </span>
+    </data-tablee>  
+  </section>
 </template>
 
 <script>
@@ -20,11 +30,13 @@
           },
           {
             label: 'Birth Date',
-            field: 'birth_date'
+            field: 'birth_date',
+            sort: (a, b) => new Date(a).getTime() - new Date(b).getTime()
           },
           {
-            label: 'Gender',
-            field: 'gender'
+            label: '',
+            field: 'gender',
+            sort: false
           },
           {
             label: 'City',
