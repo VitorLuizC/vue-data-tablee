@@ -1,5 +1,5 @@
 /*!
- * vue-data-tablee v0.4.0
+ * vue-data-tablee v0.4.1
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
@@ -256,6 +256,7 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
    * @param {{ name: string }} [options]
    */
   install: function install (Vue, ref) {
+    if ( ref === void 0 ) ref = {};
     var name = ref.name; if ( name === void 0 ) name = 'data-tablee';
 
     Vue.component(name, Object.assign({}, this, {name: name}));

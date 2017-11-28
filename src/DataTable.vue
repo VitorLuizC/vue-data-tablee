@@ -187,7 +187,7 @@
      * @param {Vue} Vue
      * @param {{ name: string }} [options]
      */
-    install (Vue, { name = 'data-tablee' }) {
+    install (Vue, { name = 'data-tablee' } = {}) {
       Vue.component(name, { ...this, name })
     }
   }
