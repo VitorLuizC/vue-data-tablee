@@ -35,6 +35,7 @@
           {
             label: 'Birth Date',
             field: 'birth_date',
+            align: 'center',
             sort: (a, b) => new Date(a).getTime() - new Date(b).getTime()
           },
           {
@@ -83,6 +84,10 @@
 
       &:first-child { content: none; }
     }
+
+    &.-right { text-align: right; }
+    &.-left { text-align: left; }
+    &.-center { text-align: center; }
   }
 
   .c-table-text {
@@ -111,15 +116,22 @@
                   transform .3s ease;
     }
 
-    &.-sortable { cursor: pointer; }
+    &.-sortable {
+      cursor: pointer;
 
-    &.-sorting > .c-table-icon,
-    &.-sortable:hover > .c-table-icon { opacity: 1; }
+      & > .c-table-icon { opacity: .2; }
 
-    &.-sorting:active > .c-table-icon {
-      transition: transform .1s ease;
-      transform: scale(1.5);
+      &:hover > .c-table-icon { opacity: .8; }
+
+      &:active > .c-table-icon {
+        transition: transform .1s ease;
+        transform: scale(1.5);
+      }
+
+      &.-right { padding-right: 6px; }
     }
+
+    &.-sorting > .c-table-icon { opacity: 1; }
   }
 
   .c-table-text { line-height: 1; }

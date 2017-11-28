@@ -41,6 +41,7 @@
   import get from './helpers/get'
   import toggle from './helpers/toggle'
   import Sortable from './mixins/Sortable'
+  import { isContent, isAlignment } from './helpers/validators'
 
   export default {
     mixins: [ Sortable ],
@@ -51,10 +52,7 @@
       cols: {
         type: Array,
         required: true,
-        validator: (cols) => {
-          const isValid = cols.every((col) => is(col, 'Object'))
-          return isValid
-        }
+        validator: isContent
       },
 
       /**
@@ -63,10 +61,7 @@
       rows: {
         type: Array,
         required: true,
-        validator: (rows) => {
-          const isValid = rows.every((row) => is(row, 'Object'))
-          return isValid
-        }
+        validator: isContent
       },
 
       /**
@@ -83,6 +78,15 @@
       sort: {
         type: [Boolean, Function],
         default: true
+      },
+
+      /**
+       * Default cell's alignment.
+       */
+      align: {
+        type: String,
+        default: 'left',
+        validator: isAlignment
       }
     },
 
@@ -120,6 +124,30 @@
       },
 
       /**
+       * Get column's property if isValid or global's property.
+       * @param {string} name
+       * @param {number} index
+       * @param {function(*):boolean} [isValid]
+       * @returns {*}
+       */
+      getProp (name, index, isValid = (value) => !is(value, 'Undefined')) {
+        const { [name]: columnProp } = this.cols[index] || {}
+        const { [name]: globalProp } = this
+        const prop = isValid(columnProp) ? columnProp : globalProp
+        return prop
+      },
+
+      /**
+       * Get column's alignment.
+       * @param {number} index
+       * @returns {('right'|'left'|'center')}
+       */
+      getAlignment (index) {
+        const alignment = this.getProp('align', index, isAlignment)
+        return alignment
+      },
+
+      /**
        * Get column arrow's.
        * @param {number} index
        * @returns {('▼'|'▲'|'')}
@@ -144,6 +172,7 @@
         const classes = [
           this.classy + '-cell',
           '-' + type,
+          '-' + this.getAlignment(index),
           {
             '-sorting': isSorting,
             ['-' + this.sortment]: isSorting,
@@ -161,8 +190,7 @@
        * @returns {boolean}
        */
       getSortable (index) {
-        const { sort = null } = this.cols[index] || {}
-        const sortable = !is(sort, 'Null') ? sort : this.sort
+        const sortable = this.getProp('sort', index)
         return sortable
       },
 

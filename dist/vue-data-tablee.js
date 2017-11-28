@@ -1,5 +1,5 @@
 /*!
- * vue-data-tablee v0.4.1
+ * vue-data-tablee v0.5.0
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
@@ -113,6 +113,31 @@ var Sortable = {
   }
 };
 
+/**
+ * Creates a validator function that checks is value is included in values.
+ * @param {Array} values
+ * @returns {function(*):boolean}
+ */
+var includes = function (values) { return function (value) { return values.includes(value); }; };
+
+var ALIGNMENTS = ['right', 'left', 'center'];
+
+/**
+ * Checks if value is an alignment.
+ */
+var isAlignment = includes(ALIGNMENTS);
+
+/**
+ * Checks if value is a list of objects.
+ * @param {*} value
+ * @returns {boolean}
+ */
+var isContent = function (value) {
+  var isObject = function (value) { return is(value, 'Object'); };
+  var isContent = is(value, 'Array') && value.every(isObject);
+  return isContent
+};
+
 var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.sortCol(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(col.label || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.getArrow(index)))])],{sortment:_vm.sortment,sorted:index === _vm.sorter,arrow:_vm.getArrow(index)})],2)})),_vm._v(" "),_vm._l((_vm.sorted),function(row,index){return _c('tr',{key:index,class:[_vm.classy + '-row', '-content']},_vm._l((row),function(field,index){return _c('td',{key:index,class:_vm.getClasses(index, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(field || _vm.empty))])])}))})],2)},staticRenderFns: [],
   mixins: [ Sortable ],
   props: {
@@ -122,10 +147,7 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     cols: {
       type: Array,
       required: true,
-      validator: function (cols) {
-        var isValid = cols.every(function (col) { return is(col, 'Object'); });
-        return isValid
-      }
+      validator: isContent
     },
 
     /**
@@ -134,10 +156,7 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     rows: {
       type: Array,
       required: true,
-      validator: function (rows) {
-        var isValid = rows.every(function (row) { return is(row, 'Object'); });
-        return isValid
-      }
+      validator: isContent
     },
 
     /**
@@ -154,6 +173,15 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     sort: {
       type: [Boolean, Function],
       default: true
+    },
+
+    /**
+     * Default cell's alignment.
+     */
+    align: {
+      type: String,
+      default: 'left',
+      validator: isAlignment
     }
   },
 
@@ -193,6 +221,34 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     },
 
     /**
+     * Get column's property if isValid or global's property.
+     * @param {string} name
+     * @param {number} index
+     * @param {function(*):boolean} [isValid]
+     * @returns {*}
+     */
+    getProp: function getProp (name, index, isValid) {
+      if ( isValid === void 0 ) isValid = function (value) { return !is(value, 'Undefined'); };
+
+      var ref = this.cols[index] || {};
+      var columnProp = ref[name];
+      var ref$1 = this;
+      var globalProp = ref$1[name];
+      var prop = isValid(columnProp) ? columnProp : globalProp;
+      return prop
+    },
+
+    /**
+     * Get column's alignment.
+     * @param {number} index
+     * @returns {('right'|'left'|'center')}
+     */
+    getAlignment: function getAlignment (index) {
+      var alignment = this.getProp('align', index, isAlignment);
+      return alignment
+    },
+
+    /**
      * Get column arrow's.
      * @param {number} index
      * @returns {('▼'|'▲'|'')}
@@ -217,6 +273,7 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
       var classes = [
         this.classy + '-cell',
         '-' + type,
+        '-' + this.getAlignment(index),
         ( obj = {
           '-sorting': isSorting,
           '-sortable': isSortable && type === 'header',
@@ -234,9 +291,7 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
      * @returns {boolean}
      */
     getSortable: function getSortable (index) {
-      var ref = this.cols[index] || {};
-      var sort = ref.sort; if ( sort === void 0 ) sort = null;
-      var sortable = !is(sort, 'Null') ? sort : this.sort;
+      var sortable = this.getProp('sort', index);
       return sortable
     },
 
