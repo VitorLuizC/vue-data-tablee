@@ -1,9 +1,8 @@
 import Vue from 'vue'
 import App from './App'
-import DataTablee from '../src'
-import '../dist/vue-data-tablee.css'
+import DataTablee from '../src/DataTable.vue'
 
-Vue.use(DataTablee, { name: 'DataTable' })
+Vue.use(DataTablee, { name: 'c-table' })
 
 global.vue = new Vue({
   el: '#app',

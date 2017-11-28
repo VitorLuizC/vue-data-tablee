@@ -1,13 +1,13 @@
 {
   "name": "vue-data-tablee",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "A very simple table component.",
   "main": "dist/vue-data-tablee.common.js",
   "module": "dist/vue-data-tablee.es.js",
   "scripts": {
     "test": "standard",
     "start": "poi demo/index.js",
-    "build": "bili src/index.js",
+    "build": "bili src/DataTable.vue",
     "prepare": "npm run build && npm test"
   },
   "repository": {

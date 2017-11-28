@@ -1,22 +1,22 @@
 <template>
   <section>
-    <data-tablee
+    <c-table
       :rows="rows"
       :cols="cols"
     />
-    <data-tablee
+    <c-table
       :rows="rows"
       :cols="cols"
       empty="-"
     >
       <span
-        class="data-tablee-icon"
+        class="c-table-icon"
         slot="sort-icon"
         slot-scope="{ sortment, sorted, arrow }"
       >
         {{ sorted ? arrow + ' ' + (sortment === 'ascending' ? 'ASC' : 'DESC') : '' }}
       </span>
-    </data-tablee>
+    </c-table>
   </section>
 </template>
 
@@ -55,20 +55,20 @@
 <style>
   @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700');
 
-  .data-tablee {
+  .c-table {
     overflow: hidden;
     border: 1px solid #eaedef;
     border-radius: 5px;
     border-spacing: 0;
   }
 
-  .data-tablee-cell {
+  .c-table-cell {
     position: relative;
     min-height: calc(27px + 4px);
     padding: 18px;
     border-top: 1px solid #eaedef;
 
-    .data-tablee-row:first-child > & { border-top: 0; }
+    .c-table-row:first-child > & { border-top: 0; }
 
     &::before {
       position: absolute;
@@ -85,18 +85,18 @@
     }
   }
 
-  .data-tablee-text {
+  .c-table-text {
     font-size: 13px;
     font-family: 'Nunito Sans', sans-serif;
     font-weight: 400;
     color: #5e6684;
   }
 
-  .data-tablee-cell.-header {
+  .c-table-cell.-header {
     background-color: #fdfdfd;
 
-    & > .data-tablee-text,
-    & > .data-tablee-icon {
+    & > .c-table-text,
+    & > .c-table-icon {
       display: inline-block;
       font-size: 12px;
       font-family: 'Nunito Sans', sans-serif;
@@ -105,7 +105,7 @@
       color: #bec0d3;
     }
 
-    & > .data-tablee-icon {
+    & > .c-table-icon {
       opacity: 0;
       transition: opacity .3s ease,
                   transform .3s ease;
@@ -113,14 +113,14 @@
 
     &.-sortable { cursor: pointer; }
 
-    &.-sorting > .data-tablee-icon,
-    &.-sortable:hover > .data-tablee-icon { opacity: 1; }
+    &.-sorting > .c-table-icon,
+    &.-sortable:hover > .c-table-icon { opacity: 1; }
 
-    &.-sorting:active > .data-tablee-icon {
+    &.-sorting:active > .c-table-icon {
       transition: transform .1s ease;
       transform: scale(1.5);
     }
   }
 
-  .data-tablee-text { line-height: 1; }
+  .c-table-text { line-height: 1; }
 </style>

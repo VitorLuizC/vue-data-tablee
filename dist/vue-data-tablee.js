@@ -1,13 +1,13 @@
 /*!
- * vue-data-tablee v0.3.0
+ * vue-data-tablee v0.4.0
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
 (function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(factory((global.vueDataTablee = {})));
-}(this, (function (exports) { 'use strict';
+	typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+	typeof define === 'function' && define.amd ? define(factory) :
+	(global.vueDataTablee = factory());
+}(this, (function () { 'use strict';
 
 /**
  * Check value's constructor name.
@@ -113,7 +113,7 @@ var Sortable = {
   }
 };
 
-var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{staticClass:"data-tablee"},[_c('tr',{staticClass:"data-tablee-row -header"},_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.sortCol(index);}}},[_c('span',{staticClass:"data-tablee-text"},[_vm._v(_vm._s(col.label || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{staticClass:"data-tablee-icon"},[_vm._v(_vm._s(_vm.getArrow(index)))])],{sortment:_vm.sortment,sorted:index === _vm.sorter,arrow:_vm.getArrow(index)})],2)})),_vm._v(" "),_vm._l((_vm.sorted),function(row,index){return _c('tr',{key:index,staticClass:"data-tablee-row -content"},_vm._l((row),function(field,index){return _c('td',{key:index,class:_vm.getClasses(index, 'content')},[_c('span',{staticClass:"data-tablee-text"},[_vm._v(_vm._s(field || _vm.empty))])])}))})],2)},staticRenderFns: [],
+var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.sortCol(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(col.label || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.getArrow(index)))])],{sortment:_vm.sortment,sorted:index === _vm.sorter,arrow:_vm.getArrow(index)})],2)})),_vm._v(" "),_vm._l((_vm.sorted),function(row,index){return _c('tr',{key:index,class:[_vm.classy + '-row', '-content']},_vm._l((row),function(field,index){return _c('td',{key:index,class:_vm.getClasses(index, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(field || _vm.empty))])])}))})],2)},staticRenderFns: [],
   mixins: [ Sortable ],
   props: {
     /**
@@ -154,6 +154,12 @@ var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
     sort: {
       type: [Boolean, Function],
       default: true
+    }
+  },
+
+  data: function data () {
+    return {
+      classy: this.$options.name || 'data-tablee'
     }
   },
 
@@ -209,7 +215,7 @@ var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       var isSortable = !!this.getSortable(index);
       var isSorting = isSortable && this.sorter === index;
       var classes = [
-        'data-tablee-cell',
+        this.classy + '-cell',
         '-' + type,
         ( obj = {
           '-sorting': isSorting,
@@ -248,22 +254,20 @@ var DataTablee = {render: function(){var _vm=this;var _h=_vm.$createElement;var 
       }, value);
       return label || this.empty
     }
+  },
+
+  /**
+   * Install DataTablee components.
+   * @param {Vue} Vue
+   * @param {{ name: string }} [options]
+   */
+  install: function install (Vue, ref) {
+    var name = ref.name; if ( name === void 0 ) name = 'data-tablee';
+
+    Vue.component(name, Object.assign({}, this, {name: name}));
   }
 };
 
-/**
- * Install DataTablee components.
- * @param {Vue} Vue
- * @param {{ name: string }} [options]
- */
-var install = function (Vue) {
-  Vue.component('DataTablee', DataTablee);
-};
-
-exports.install = install;
-exports.DataTablee = DataTablee;
-exports['default'] = install;
-
-Object.defineProperty(exports, '__esModule', { value: true });
+return DataTable;
 
 })));

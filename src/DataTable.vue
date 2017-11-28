@@ -1,13 +1,13 @@
 <template>
-  <table class="data-tablee">
-    <tr class="data-tablee-row -header">
+  <table :class="classy">
+    <tr :class="[classy + '-row', '-header']">
       <th
         v-for="(col, index) in cols"
         :key="index"
         :class="getClasses(index, 'header')"
         @click="sortCol(index)"
       >
-        <span class="data-tablee-text">{{ col.label || empty }}</span>
+        <span :class="classy + '-text'">{{ col.label || empty }}</span>
 
         <slot
           name="sort-icon"
@@ -15,7 +15,7 @@
           :sorted="index === sorter"
           :arrow="getArrow(index)"
         >
-          <span class="data-tablee-icon">{{ getArrow(index) }}</span>
+          <span :class="classy + '-icon'">{{ getArrow(index) }}</span>
         </slot>
       </th>
     </tr>
@@ -23,24 +23,24 @@
     <tr
       v-for="(row, index) in sorted"
       :key="index"
-      class="data-tablee-row -content"
+      :class="[classy + '-row', '-content']"
     >
       <td
         v-for="(field, index) in row"
         :key="index"
         :class="getClasses(index, 'content')"
       >
-        <span class="data-tablee-text">{{ field || empty }}</span>
+        <span :class="classy + '-text'">{{ field || empty }}</span>
       </td>
     </tr>
   </table>
 </template>
 
 <script>
-  import is from '../helpers/is'
-  import get from '../helpers/get'
-  import toggle from '../helpers/toggle'
-  import Sortable from '../mixins/Sortable'
+  import is from './helpers/is'
+  import get from './helpers/get'
+  import toggle from './helpers/toggle'
+  import Sortable from './mixins/Sortable'
 
   export default {
     mixins: [ Sortable ],
@@ -83,6 +83,12 @@
       sort: {
         type: [Boolean, Function],
         default: true
+      }
+    },
+
+    data () {
+      return {
+        classy: this.$options.name || 'data-tablee'
       }
     },
 
@@ -136,7 +142,7 @@
         const isSortable = !!this.getSortable(index)
         const isSorting = isSortable && this.sorter === index
         const classes = [
-          'data-tablee-cell',
+          this.classy + '-cell',
           '-' + type,
           {
             '-sorting': isSorting,
@@ -174,6 +180,15 @@
         }, value)
         return label || this.empty
       }
+    },
+
+    /**
+     * Install DataTablee components.
+     * @param {Vue} Vue
+     * @param {{ name: string }} [options]
+     */
+    install (Vue, { name = 'data-tablee' }) {
+      Vue.component(name, { ...this, name })
     }
   }
 </script>
