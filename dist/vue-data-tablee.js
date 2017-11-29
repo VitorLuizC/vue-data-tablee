@@ -1,5 +1,5 @@
 /*!
- * vue-data-tablee v0.6.1
+ * vue-data-tablee v0.7.0
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
@@ -267,7 +267,7 @@ var isContent = function (value) {
   return isContent
 };
 
-var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.$setSorter(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.$getArrow(index)))])],{sortment:_vm.sortment,sorted:_vm.$isSorting(index),arrow:_vm.$getArrow(index)})],2)})),_vm._v(" "),_vm._l((_vm.$sortedRows),function(row,rowIndex){return _c('tr',{key:rowIndex,class:[_vm.classy + '-row', '-content']},_vm._l((_vm.cols),function(col,colIndex){return _c('td',{key:colIndex,class:_vm.getClasses(colIndex, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])])}))})],2)},staticRenderFns: [],
+var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.$setSorter(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.$getArrow(index)))])],{sortment:_vm.sortment,sorted:_vm.$isSorting(index),arrow:_vm.$getArrow(index)})],2)})),_vm._v(" "),_vm._l((_vm.$sortedRows),function(row,rowIndex){return _vm._t("row",[_c('tr',{class:[_vm.classy + '-row', '-content']},_vm._l((_vm.cols),function(col,colIndex){return _c('td',{key:colIndex,class:_vm.getClasses(colIndex, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])])}))],{classy:[_vm.classy + '-row', '-content'],row:row})})],2)},staticRenderFns: [],
   mixins: [ Sortable() ],
   props: {
     /**

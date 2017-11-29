@@ -16,6 +16,17 @@
       >
         {{ sorted ? arrow + ' ' + (sortment === 'ascending' ? 'ASC' : 'DESC') : '' }}
       </span>
+
+      <tr
+        slot="row"
+        slot-scope="{ row, classy }"
+        :class="classy"
+      >
+        <td class="c-table-cell -content c-table-text" >{{ row.name }}</td>
+        <td class="c-table-cell -content c-table-text" >{{ row.birth_date }}</td>
+        <td class="c-table-cell -content c-table-text" >{{ row.gender }}</td>
+        <td class="c-table-cell -content c-table-text" >{{ row.address.city }}</td>
+      </tr>
     </c-table>
   </section>
 </template>

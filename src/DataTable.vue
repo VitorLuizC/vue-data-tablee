@@ -20,19 +20,23 @@
       </th>
     </tr>
 
-    <tr
+
+    <slot
       v-for="(row, rowIndex) in $sortedRows"
-      :key="rowIndex"
-      :class="[classy + '-row', '-content']"
+      name="row"
+      :classy="[classy + '-row', '-content']"
+      :row="row"
     >
-      <td
-        v-for="(col, colIndex) in cols"
-        :key="colIndex"
-        :class="getClasses(colIndex, 'content')"
-      >
-        <span :class="classy + '-text'">{{ getText(row, col.field) || empty }}</span>
-      </td>
-    </tr>
+      <tr :class="[classy + '-row', '-content']">
+        <td
+          v-for="(col, colIndex) in cols"
+          :key="colIndex"
+          :class="getClasses(colIndex, 'content')"
+        >
+          <span :class="classy + '-text'">{{ getText(row, col.field) || empty }}</span>
+        </td>
+      </tr>
+    </slot>
   </table>
 </template>
 
