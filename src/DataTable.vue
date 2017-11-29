@@ -192,21 +192,6 @@
       getSortable (index) {
         const sortable = this.getProp('sort', index)
         return sortable
-      },
-
-      /**
-       * Get value's label.
-       * @param {*} value
-       * @param {string} field
-       * @returns {string}
-       */
-      getText (value, field) {
-        const label = field.split('.').reduce((value, field) => {
-          if (is(value, 'Object') && value.hasOwnProperty(field))
-            return value[field]
-          return null
-        }, value)
-        return label || this.empty
       }
     },
 
