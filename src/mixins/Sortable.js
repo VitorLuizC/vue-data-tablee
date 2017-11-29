@@ -37,11 +37,12 @@ const Sortable = ({ cols = 'cols', rows = 'rows' } = {}) => ({
 
   computed: {
     $sortedRows () {
-      if (!is(this.sorter, 'Number')) {
-        return this[rows]
+      const isSorted = is(this.sorter, 'Number')
+      if (!isSorted) {
+        return [ ...this[rows] ]
       }
 
-      const sorted = this[rows].sort((a, b) => this.$sort(a, b))
+      const sorted = [ ...this[rows] ].sort((a, b) => this.$sort(a, b))
       return sorted
     }
   },

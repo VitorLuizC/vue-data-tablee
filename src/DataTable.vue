@@ -132,7 +132,7 @@
      * @param {{ name: string }} [options]
      */
     install (Vue, { name = 'data-tablee' } = {}) {
-      Vue.component(name, { ...this, name })
+      Vue.component(name, this)
     }
   }
 </script>

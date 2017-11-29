@@ -1,5 +1,5 @@
 /*!
- * vue-data-tablee v0.6.0
+ * vue-data-tablee v0.6.1
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
@@ -130,11 +130,12 @@ var Sortable = function (ref) {
     $sortedRows: function $sortedRows () {
       var this$1 = this;
 
-      if (!is(this.sorter, 'Number')) {
-        return this[rows]
+      var isSorted = is(this.sorter, 'Number');
+      if (!isSorted) {
+        return [].concat( this[rows] )
       }
 
-      var sorted = this[rows].sort(function (a, b) { return this$1.$sort(a, b); });
+      var sorted = [].concat( this[rows] ).sort(function (a, b) { return this$1.$sort(a, b); });
       return sorted
     }
   },
@@ -353,7 +354,7 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     if ( ref === void 0 ) ref = {};
     var name = ref.name; if ( name === void 0 ) name = 'data-tablee';
 
-    Vue.component(name, Object.assign({}, this, {name: name}));
+    Vue.component(name, this);
   }
 };
 
