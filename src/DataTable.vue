@@ -5,32 +5,32 @@
         v-for="(col, index) in cols"
         :key="index"
         :class="getClasses(index, 'header')"
-        @click="sortCol(index)"
+        @click="$setSorter(index)"
       >
-        <span :class="classy + '-text'">{{ col.label || empty }}</span>
+        <span :class="classy + '-text'">{{ getText(col, 'label') || empty }}</span>
 
         <slot
           name="sort-icon"
           :sortment="sortment"
-          :sorted="index === sorter"
-          :arrow="getArrow(index)"
+          :sorted="$isSorting(index)"
+          :arrow="$getArrow(index)"
         >
-          <span :class="classy + '-icon'">{{ getArrow(index) }}</span>
+          <span :class="classy + '-icon'">{{ $getArrow(index) }}</span>
         </slot>
       </th>
     </tr>
 
     <tr
-      v-for="(row, index) in sorted"
-      :key="index"
+      v-for="(row, rowIndex) in $sortedRows"
+      :key="rowIndex"
       :class="[classy + '-row', '-content']"
     >
       <td
-        v-for="(field, index) in row"
-        :key="index"
-        :class="getClasses(index, 'content')"
+        v-for="(col, colIndex) in cols"
+        :key="colIndex"
+        :class="getClasses(colIndex, 'content')"
       >
-        <span :class="classy + '-text'">{{ field || empty }}</span>
+        <span :class="classy + '-text'">{{ getText(row, col.field) || empty }}</span>
       </td>
     </tr>
   </table>
@@ -38,13 +38,13 @@
 
 <script>
   import is from './helpers/is'
-  import get from './helpers/get'
+  import get, { getProperty } from './helpers/get'
   import toggle from './helpers/toggle'
   import Sortable from './mixins/Sortable'
   import { isContent, isAlignment } from './helpers/validators'
 
   export default {
-    mixins: [ Sortable ],
+    mixins: [ Sortable() ],
     props: {
       /**
        * List of col's data.
@@ -73,14 +73,6 @@
       },
 
       /**
-       * Defines if it sort and optionally define's default sort function.
-       */
-      sort: {
-        type: [Boolean, Function],
-        default: true
-      },
-
-      /**
        * Default cell's alignment.
        */
       align: {
@@ -96,68 +88,16 @@
       }
     },
 
-    computed: {
-      content () {
-        const { rows, cols } = this
-        const cross = (a, b) => (λ) => a.map((a) => b.map((b) => λ(a, b)))
-        const content = cross(rows, cols)((row, col) => get(row, col.field))
-        return content
-      }
-    },
-
     methods: {
-      /**
-       * Sort a column or change its sortment.
-       * @param {number} index
-       */
-      sortCol (index) {
-        const isSorter = this.sorter === index
-        const isSortable = !!this.getSortable(index)
-        const toggleSortment = toggle('ascending', 'descending')
-
-        if (isSortable && isSorter) {
-          this.sortment = toggleSortment(this.sortment)
-        } else if (isSortable) {
-          this.sorter = index
-          this.sortment = 'ascending'
-        }
-      },
-
-      /**
-       * Get column's property if isValid or global's property.
-       * @param {string} name
-       * @param {number} index
-       * @param {function(*):boolean} [isValid]
-       * @returns {*}
-       */
-      getProp (name, index, isValid = (value) => !is(value, 'Undefined')) {
-        const { [name]: columnProp } = this.cols[index] || {}
-        const { [name]: globalProp } = this
-        const prop = isValid(columnProp) ? columnProp : globalProp
-        return prop
-      },
-
       /**
        * Get column's alignment.
        * @param {number} index
        * @returns {('right'|'left'|'center')}
        */
       getAlignment (index) {
-        const alignment = this.getProp('align', index, isAlignment)
+        const col = this.cols[index]
+        const alignment = getProperty('align', [col, this._props], isAlignment)
         return alignment
-      },
-
-      /**
-       * Get column arrow's.
-       * @param {number} index
-       * @returns {('▼'|'▲'|'')}
-       */
-      getArrow (index) {
-        const isSorting = index === this.sorter
-        if (!isSorting)
-          return '▲'
-        const arrow = this.sortment === 'ascending' ? '▲' : '▼'
-        return arrow
       },
 
       /**
@@ -167,32 +107,23 @@
        * @returns {(string|Object.<string, boolean>)[]}
        */
       getClasses (index, type) {
-        const isSortable = !!this.getSortable(index)
-        const isSorting = isSortable && this.sorter === index
         const classes = [
           this.classy + '-cell',
           '-' + type,
           '-' + this.getAlignment(index),
-          {
-            '-sorting': isSorting,
-            ['-' + this.sortment]: isSorting,
-            '-sortable': isSortable && type === 'header',
-            '-unsortable': !isSortable && type === 'header'
-          }
+          ...this.$getSortClasses(index)
         ]
 
         return classes
       },
 
       /**
-       * Check if column from index specified is sortable.
-       * @param {number} index
-       * @returns {boolean}
+       * Get value's label.
+       * @param {*} value
+       * @param {string} path
+       * @returns {string}
        */
-      getSortable (index) {
-        const sortable = this.getProp('sort', index)
-        return sortable
-      }
+      getText: get
     },
 
     /**

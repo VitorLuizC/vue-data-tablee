@@ -32,8 +32,25 @@ const getValue = (object, property) => {
  * @param {(string|Array.<string>)} path
  * @returns {(number|boolean|string|null)}
  */
-export default (object, path) => {
+export const get = (object, path) => {
   const properties = getProperties(path)
   const value = properties.reduce(getValue, object)
   return value
 }
+
+const DEFAULT_VALIDATE = (value) => !is(value, 'Null')
+
+/**
+ * Get value from first object.
+ * @param {string} name
+ * @param {Deep[]} objects
+ * @param {function(*):boolean} [validate]
+ * @returns {*}
+ */
+export const getProperty = (name, objects, validate = DEFAULT_VALIDATE) => {
+  const properties = objects.map((object) => get(object, name))
+  const property = properties.find((property) => validate(property))
+  return property
+}
+
+export default get
