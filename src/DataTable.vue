@@ -42,13 +42,14 @@
 
 <script>
   import is from './helpers/is'
-  import get, { getProperty } from './helpers/get'
+  import get from './helpers/get'
   import toggle from './helpers/toggle'
+  import Alignable from './mixins/Alignable'
   import Sortable from './mixins/Sortable'
-  import { isContent, isAlignment } from './helpers/validators'
+  import { isContent } from './helpers/validators'
 
   export default {
-    mixins: [ Sortable() ],
+    mixins: [ Sortable(), Alignable() ],
     props: {
       /**
        * List of col's data.
@@ -74,15 +75,6 @@
       empty: {
         type: String,
         default: ''
-      },
-
-      /**
-       * Default cell's alignment.
-       */
-      align: {
-        type: String,
-        default: 'left',
-        validator: isAlignment
       }
     },
 
@@ -94,17 +86,6 @@
 
     methods: {
       /**
-       * Get column's alignment.
-       * @param {number} index
-       * @returns {('right'|'left'|'center')}
-       */
-      getAlignment (index) {
-        const col = this.cols[index]
-        const alignment = getProperty('align', [col, this._props], isAlignment)
-        return alignment
-      },
-
-      /**
        * Get cell's classes.
        * @param {number} index
        * @param {('header'|'content')} type
@@ -114,7 +95,7 @@
         const classes = [
           this.classy + '-cell',
           '-' + type,
-          '-' + this.getAlignment(index),
+          '-' + this.$getAlignment(index),
           ...this.$getSortClasses(index)
         ]
 

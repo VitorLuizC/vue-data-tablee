@@ -4,6 +4,7 @@
       :rows="rows"
       :cols="cols"
       sort-external
+      align="right"
     />
     <c-table
       :rows="rows"
