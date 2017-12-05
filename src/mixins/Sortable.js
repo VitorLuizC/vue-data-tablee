@@ -25,7 +25,12 @@ const Sortable = ({ cols = 'cols', rows = 'rows' } = {}) => ({
     sort: {
       type: [Boolean, Function],
       default: true
-    }
+    },
+
+    /**
+     * Defines if sort just emit events.
+     */
+    sortExternal: Boolean
   },
 
   data () {
@@ -38,7 +43,7 @@ const Sortable = ({ cols = 'cols', rows = 'rows' } = {}) => ({
   computed: {
     $sortedRows () {
       const isSorted = is(this.sorter, 'Number')
-      if (!isSorted) {
+      if (!isSorted || this.sortExternal) {
         return [ ...this[rows] ]
       }
 
@@ -118,12 +123,15 @@ const Sortable = ({ cols = 'cols', rows = 'rows' } = {}) => ({
       const isSorter = this.$isSorting(index)
       const isSortable = this.$isSortable(index)
 
-      if (isSortable && isSorter) {
-        this.sortment = T('ascending', 'descending')(this.sortment)
-      } else if (isSortable) {
-        this.sorter = index
-        this.sortment = 'ascending'
+      if (!isSortable) {
+        return
       }
+
+      const column = this[cols][index]
+      const sortment = !isSorter || this.sortment === 'descending' ? 'ascending' : 'descending'
+      this.sortment = sortment
+      this.sorter = index
+      this.$emit('sort', { column, sortment })
     },
 
     /**

@@ -3,6 +3,7 @@
     <c-table
       :rows="rows"
       :cols="cols"
+      sort-external
     />
     <c-table
       :rows="rows"
