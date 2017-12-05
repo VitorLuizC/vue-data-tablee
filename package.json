@@ -37,15 +37,15 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^7.1.6",
-    "bili": "^0.18.2",
+    "autoprefixer": "^7.2.1",
+    "bili": "^0.19.0",
     "cssnano": "^3.10.0",
-    "poi": "^9.5.4",
+    "poi": "^9.5.5",
     "postcss-nested": "^2.1.2",
-    "rollup-plugin-vue": "^2.5.2",
+    "rollup-plugin-vue": "^3.0.0",
     "standard": "^10.0.3",
     "sugarss": "^1.0.1",
-    "vue": "^2.5.8",
-    "vue-template-compiler": "^2.5.8"
+    "vue": "^2.5.9",
+    "vue-template-compiler": "^2.5.9"
   }
 }
