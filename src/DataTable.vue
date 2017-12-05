@@ -2,6 +2,18 @@
   <table :class="classy">
     <tr :class="[classy + '-row', '-header']">
       <th
+        v-if="selectable"
+        :class="[classy + '-cell', '-header']"
+      >
+        <input
+          type="checkbox"
+          :class="[classy + '-select', '-all']"
+          :checked="isSelectedAll"
+          @click="selectAll"
+        />
+      </th>
+
+      <th
         v-for="(col, index) in cols"
         :key="index"
         :class="getClasses(index, 'header')"
@@ -20,14 +32,24 @@
       </th>
     </tr>
 
-
-    <slot
+    <tr
       v-for="(row, rowIndex) in $sortedRows"
-      name="row"
-      :classy="[classy + '-row', '-content']"
-      :row="row"
-    >
-      <tr :class="[classy + '-row', '-content']">
+      :key="rowIndex"
+      :class="[classy + '-row', '-content']">
+
+      <th
+        v-if="selectable"
+        :class="[classy + '-cell', '-content']"
+      >
+        <input
+          type="checkbox"
+          :class="[classy + '-select', '-all']"
+          :checked="isSelected(row)"
+          @click="select(row)"
+        />
+      </th>
+
+      <slot name="row" :row="row">
         <td
           v-for="(col, colIndex) in cols"
           :key="colIndex"
@@ -35,8 +57,8 @@
         >
           <span :class="classy + '-text'">{{ getText(row, col.field) || empty }}</span>
         </td>
-      </tr>
-    </slot>
+      </slot>
+    </tr>
   </table>
 </template>
 
@@ -45,11 +67,12 @@
   import get from './helpers/get'
   import toggle from './helpers/toggle'
   import Alignable from './mixins/Alignable'
+  import Selectable from './mixins/Selectable'
   import Sortable from './mixins/Sortable'
   import { isContent } from './helpers/validators'
 
   export default {
-    mixins: [ Sortable(), Alignable() ],
+    mixins: [ Sortable(), Alignable(), Selectable() ],
     props: {
       /**
        * List of col's data.
