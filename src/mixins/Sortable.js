@@ -1,6 +1,5 @@
 import is from '../helpers/is'
 import get, { getProperty } from '../helpers/get'
-import T from '../helpers/toggle'
 
 /**
  * Default sort function.

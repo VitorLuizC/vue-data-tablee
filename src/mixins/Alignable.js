@@ -13,16 +13,16 @@ const Alignable = ({ cols = 'cols' } = {}) => ({
     }
   },
   methods: {
-  /**
-    * Get column's alignment.
-    * @param {number} index
-    * @returns {('right'|'left'|'center')}
-    */
-   $getAlignment (index) {
-     const col = this[cols][index]
-     const alignment = getProperty('align', [col, this._props], isAlignment)
-     return alignment
-   }
+    /**
+     * Get column's alignment.
+     * @param {number} index
+     * @returns {('right'|'left'|'center')}
+     */
+    $getAlignment (index) {
+      const col = this[cols][index]
+      const alignment = getProperty('align', [col, this._props], isAlignment)
+      return alignment
+    }
   }
 })
 

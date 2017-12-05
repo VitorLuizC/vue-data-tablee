@@ -28,7 +28,7 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
   methods: {
     /**
      * Check if a row is selected.
-     * @param {object} row 
+     * @param {object} row
      * @returns {boolean}
      */
     isSelected (row) {
@@ -38,7 +38,7 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
 
     /**
      * Set row active.
-     * @param {object} row 
+     * @param {object} row
      */
     select (row) {
       this.selectedRows = this.isSelected(row)
