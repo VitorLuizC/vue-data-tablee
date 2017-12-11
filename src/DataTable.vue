@@ -49,7 +49,7 @@
         />
       </th>
 
-      <slot name="row" :row="row">
+      <slot name="row" :row="row" :index="rowIndex">
         <td
           v-for="(col, colIndex) in cols"
           :key="colIndex"
