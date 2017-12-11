@@ -22,8 +22,9 @@
 
       <template
         slot="row"
-        slot-scope="{ row }"
+        slot-scope="{ row, index }"
       >
+				<td class="c-table-cell -content c-table-text" >{{ index }}</td>
         <td class="c-table-cell -content c-table-text" >{{ row.name }}</td>
         <td class="c-table-cell -content c-table-text" >{{ row.birth_date }}</td>
         <td class="c-table-cell -content c-table-text" >{{ row.gender }}</td>
@@ -41,6 +42,9 @@
       return {
         rows: users,
         cols: [
+					{
+            label: 'Index'
+          },
           {
             label: 'Name',
             field: 'name'
