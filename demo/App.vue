@@ -42,9 +42,6 @@
       return {
         rows: users,
         cols: [
-					{
-            label: 'Index'
-          },
           {
             label: 'Name',
             field: 'name'
@@ -105,6 +102,7 @@
     &.-right { text-align: right; }
     &.-left { text-align: left; }
     &.-center { text-align: center; }
+		&.-clickable { cursor: pointer; }
   }
 
   .c-table-text {

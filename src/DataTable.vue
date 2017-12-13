@@ -3,13 +3,13 @@
     <tr :class="[classy + '-row', '-header']">
       <th
         v-if="selectable"
-        :class="[classy + '-cell', '-header']"
+        :class="[classy + '-cell', '-header', '-clickable']"
       >
         <input
           type="checkbox"
           :class="[classy + '-select', '-all']"
           :checked="isSelectedAll"
-          @click="selectAll"
+					@click="selectAll"
         />
       </th>
 
@@ -39,13 +39,13 @@
 
       <th
         v-if="selectable"
-        :class="[classy + '-cell', '-content']"
+				@click="e => select(row, e)"
+        :class="[classy + '-cell', '-content', '-clickable']"
       >
         <input
           type="checkbox"
           :class="[classy + '-select', '-all']"
           :checked="isSelected(row)"
-          @click="select(row)"
         />
       </th>
 

@@ -149,7 +149,8 @@ var Selectable = function (ref) {
 
   data: function data () {
     return {
-      selectedRows: []
+			selectedRows: [],
+			lastClicked: undefined
     }
   },
 
@@ -185,12 +186,34 @@ var Selectable = function (ref) {
     /**
      * Set row active.
      * @param {object} row
+		 * @param {object} event
      */
-    select: function select (row) {
-      this.selectedRows = this.isSelected(row)
-        ? this.selectedRows.filter(function (selected) { return selected !== row; })
-        : this.selectedRows.concat( [row] );
-      this.emitSelected();
+    select: function select (row, event) {
+			if (event.shiftKey && this.lastClicked !== row) {
+				this.multipleSelect(row);
+				this.lastClicked = row;
+			} else {
+				this.selectedRows = this.isSelected(row)
+				? this.selectedRows.filter(function (selected) { return selected !== row; })
+				: this.selectedRows.concat( [row] );
+			}
+			this.emitSelected();
+		},
+
+		/**
+     * Set multiple rows active.
+     * @param {object} row
+     */
+    multipleSelect: function multipleSelect (row) {
+			var s1 = this[rows].indexOf(row);
+			var s2 = this[rows].indexOf(this.lastClicked);
+			var ref = [s1, s2].sort();
+			var start = ref[0];
+			var end = ref[1];
+			var selectedRange = Array(end - start + 1).fill().map(function (item, index) { return start + index; });
+			this.selectedRows = this[rows].filter(function (item, index) {
+				return selectedRange.indexOf(index) >= 0
+			});
     },
 
     /**
@@ -373,7 +396,7 @@ var Sortable = function (ref) {
 });
 };
 
-var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-header']},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelectedAll},on:{"click":_vm.selectAll}})]):_vm._e(),_vm._v(" "),_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.$setSorter(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.$getArrow(index)))])],{sortment:_vm.sortment,sorted:_vm.$isSorting(index),arrow:_vm.$getArrow(index)})],2)})],2),_vm._v(" "),_vm._l((_vm.$sortedRows),function(row,rowIndex){return _c('tr',{key:rowIndex,class:[_vm.classy + '-row', '-content']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-content']},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelected(row)},on:{"click":function($event){_vm.select(row);}}})]):_vm._e(),_vm._v(" "),_vm._t("row",_vm._l((_vm.cols),function(col,colIndex){return _c('td',{key:colIndex,class:_vm.getClasses(colIndex, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])])}),{row:row,index:rowIndex})],2)})],2)},staticRenderFns: [],
+var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-header', '-clickable']},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelectedAll},on:{"click":_vm.selectAll}})]):_vm._e(),_vm._v(" "),_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.$setSorter(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.$getArrow(index)))])],{sortment:_vm.sortment,sorted:_vm.$isSorting(index),arrow:_vm.$getArrow(index)})],2)})],2),_vm._v(" "),_vm._l((_vm.$sortedRows),function(row,rowIndex){return _c('tr',{key:rowIndex,class:[_vm.classy + '-row', '-content']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-content', '-clickable'],on:{"click":function (e) { return _vm.select(row, e); }}},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelected(row)}})]):_vm._e(),_vm._v(" "),_vm._t("row",_vm._l((_vm.cols),function(col,colIndex){return _c('td',{key:colIndex,class:_vm.getClasses(colIndex, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])])}),{row:row,index:rowIndex})],2)})],2)},staticRenderFns: [],
   mixins: [ Sortable(), Alignable(), Selectable() ],
   props: {
     /**
