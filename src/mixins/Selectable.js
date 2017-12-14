@@ -33,7 +33,7 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
      * @returns {boolean}
      */
     isSelected (row) {
-      const isSelected = !!this.selectedRows.find(selected => selected === row)
+      const isSelected = !!this.selectedRows.find((selected) => selected === row)
       return isSelected
     },
 
@@ -48,8 +48,8 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
         this.lastClicked = row
       } else {
         this.selectedRows = this.isSelected(row)
-        ? this.selectedRows.filter(selected => selected !== row)
-        : [ ...this.selectedRows, row ]
+          ? this.selectedRows.filter((selected) => selected !== row)
+          : [ ...this.selectedRows, row ]
       }
       this.emitSelected()
     },
@@ -62,10 +62,8 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
       const s1 = this[rows].indexOf(row)
       const s2 = this[rows].indexOf(this.lastClicked)
       const [start, end] = [s1, s2].sort()
-      const selectedRange = Array(end - start + 1).fill().map((item, index) => start + index)
-      this.selectedRows = this[rows].filter((item, index) => {
-        return selectedRange.indexOf(index) >= 0
-      })
+      const range = [ ...Array(end - start + 1) ].map((_, index) => start + index)
+      this.selectedRows = this[rows].filter((_, index) => range.includes(index))
     },
 
     /**
