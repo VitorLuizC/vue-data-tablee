@@ -185,12 +185,12 @@ var Selectable = function (ref) {
     select: function select (row, event) {
       if (event.shiftKey && this.lastClicked !== row) {
         this.multipleSelect(row);
-        this.lastClicked = row;
       } else {
         this.selectedRows = this.isSelected(row)
-          ? this.selectedRows.filter(function (selected) { return selected !== row; })
-          : this.selectedRows.concat( [row] );
+        ? this.selectedRows.filter(function (selected) { return selected !== row; })
+        : this.selectedRows.concat( [row] );
       }
+      this.lastClicked = row;
       this.emitSelected();
     },
 
@@ -204,7 +204,7 @@ var Selectable = function (ref) {
       var ref = [s1, s2].sort();
       var start = ref[0];
       var end = ref[1];
-      var range = [].concat( Array(end - start + 1) ).map(function (_, index) { return start + index; });
+      var range = Array(end - start + 1).fill().map(function (_, index) { return start + index; });
       this.selectedRows = this[rows].filter(function (_, index) { return range.includes(index); });
     },
 

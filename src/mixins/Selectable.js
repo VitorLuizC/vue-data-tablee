@@ -45,12 +45,12 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
     select (row, event) {
       if (event.shiftKey && this.lastClicked !== row) {
         this.multipleSelect(row)
-        this.lastClicked = row
       } else {
         this.selectedRows = this.isSelected(row)
-          ? this.selectedRows.filter((selected) => selected !== row)
-          : [ ...this.selectedRows, row ]
+        ? this.selectedRows.filter((selected) => selected !== row)
+        : [ ...this.selectedRows, row ]
       }
+      this.lastClicked = row
       this.emitSelected()
     },
 
@@ -62,7 +62,7 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
       const s1 = this[rows].indexOf(row)
       const s2 = this[rows].indexOf(this.lastClicked)
       const [start, end] = [s1, s2].sort()
-      const range = [ ...Array(end - start + 1) ].map((_, index) => start + index)
+      const range = Array(end - start + 1).fill().map((_, index) => start + index)
       this.selectedRows = this[rows].filter((_, index) => range.includes(index))
     },
 
