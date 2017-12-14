@@ -187,8 +187,8 @@ var Selectable = function (ref) {
         this.multipleSelect(row);
       } else {
         this.selectedRows = this.isSelected(row)
-        ? this.selectedRows.filter(function (selected) { return selected !== row; })
-        : this.selectedRows.concat( [row] );
+          ? this.selectedRows.filter(function (selected) { return selected !== row; })
+          : this.selectedRows.concat( [row] );
       }
       this.lastClicked = row;
       this.emitSelected();

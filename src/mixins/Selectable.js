@@ -47,8 +47,8 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
         this.multipleSelect(row)
       } else {
         this.selectedRows = this.isSelected(row)
-        ? this.selectedRows.filter((selected) => selected !== row)
-        : [ ...this.selectedRows, row ]
+          ? this.selectedRows.filter((selected) => selected !== row)
+          : [ ...this.selectedRows, row ]
       }
       this.lastClicked = row
       this.emitSelected()
