@@ -7,3 +7,6 @@ node_modules/
 
 # OS stuff
 .DS_Store
+
+# Yarn ~srry
+yarn.lock
