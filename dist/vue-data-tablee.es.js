@@ -1,5 +1,5 @@
 /*!
- * vue-data-tablee v0.9.0
+ * vue-data-tablee v0.10.0
  * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
@@ -143,8 +143,8 @@ var Selectable = function (ref) {
 
   data: function data () {
     return {
-			selectedRows: [],
-			lastClicked: undefined
+      selectedRows: [],
+      lastClicked: undefined
     }
   },
 
@@ -180,34 +180,32 @@ var Selectable = function (ref) {
     /**
      * Set row active.
      * @param {object} row
-		 * @param {object} event
+     * @param {object} event
      */
     select: function select (row, event) {
-			if (event.shiftKey && this.lastClicked !== row) {
-				this.multipleSelect(row);
-				this.lastClicked = row;
-			} else {
-				this.selectedRows = this.isSelected(row)
-				? this.selectedRows.filter(function (selected) { return selected !== row; })
-				: this.selectedRows.concat( [row] );
-			}
-			this.emitSelected();
-		},
+      if (event.shiftKey && this.lastClicked !== row) {
+        this.multipleSelect(row);
+        this.lastClicked = row;
+      } else {
+        this.selectedRows = this.isSelected(row)
+          ? this.selectedRows.filter(function (selected) { return selected !== row; })
+          : this.selectedRows.concat( [row] );
+      }
+      this.emitSelected();
+    },
 
-		/**
+    /**
      * Set multiple rows active.
      * @param {object} row
      */
     multipleSelect: function multipleSelect (row) {
-			var s1 = this[rows].indexOf(row);
-			var s2 = this[rows].indexOf(this.lastClicked);
-			var ref = [s1, s2].sort();
-			var start = ref[0];
-			var end = ref[1];
-			var selectedRange = Array(end - start + 1).fill().map(function (item, index) { return start + index; });
-			this.selectedRows = this[rows].filter(function (item, index) {
-				return selectedRange.indexOf(index) >= 0
-			});
+      var s1 = this[rows].indexOf(row);
+      var s2 = this[rows].indexOf(this.lastClicked);
+      var ref = [s1, s2].sort();
+      var start = ref[0];
+      var end = ref[1];
+      var range = [].concat( Array(end - start + 1) ).map(function (_, index) { return start + index; });
+      this.selectedRows = this[rows].filter(function (_, index) { return range.includes(index); });
     },
 
     /**
