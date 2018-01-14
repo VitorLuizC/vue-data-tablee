@@ -2,10 +2,15 @@
 
 ![[JavaScript Style Guide][2]][3]
 
-![Screenshot of a styled DataTable component][6]
-
 Yeap, another Vue table component. This one is based on [vue-good-table][0], a
 simple and pretty table component.
+
+<img
+  width="500"
+  src="./demo/Screenshot.png"
+  alt="Screenshot of a styled DataTable component"
+  title="Screenshot of a styled DataTable component"
+/>
 
 ## Install
 
@@ -18,6 +23,7 @@ npm install vue-data-tablee
 With `Vue.use` function declare vue-data-tablee components.
 
 ```js
+import 'vue-data-tablee/dist/vue-data-tablee.css'
 import Vue from 'vue'
 import DataTablee from 'vue-data-tablee'
 
@@ -78,4 +84,3 @@ Released under [MIT license][1].
 [3]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
 [4]: /#cols-properties
 [5]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Description
-[6]: ./demo/Screenshot.png

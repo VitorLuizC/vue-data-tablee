@@ -1,0 +1,71 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito+Sans:400,700");
+.data-tablee {
+  overflow: hidden;
+  border: 1px solid #eaedef;
+  border-radius: 5px;
+  border-spacing: 0; }
+
+.data-tablee-cell {
+  position: relative;
+  min-height: calc(27px + 4px);
+  padding: 18px;
+  border-top: 1px solid #eaedef; }
+  .data-tablee-row:first-child > .data-tablee-cell {
+    border-top: 0; }
+  .data-tablee-cell::before {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    display: block;
+    width: 1px;
+    height: 27px;
+    background-color: #eaedef;
+    transform: translateY(-50%);
+    content: ''; }
+  .data-tablee-cell:first-child::before {
+    content: none; }
+  .data-tablee-cell.-right {
+    text-align: right; }
+  .data-tablee-cell.-left {
+    text-align: left; }
+  .data-tablee-cell.-center {
+    text-align: center; }
+  .data-tablee-cell.-clickable {
+    cursor: pointer; }
+
+.data-tablee-text {
+  font-size: 13px;
+  font-family: 'Nunito Sans', sans-serif;
+  font-weight: 400;
+  color: #5e6684; }
+
+.data-tablee-cell.-header {
+  background-color: #fdfdfd; }
+  .data-tablee-cell.-header > .data-tablee-text,
+  .data-tablee-cell.-header > .data-tablee-icon {
+    display: inline-block;
+    font-size: 12px;
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #bec0d3; }
+  .data-tablee-cell.-header > .data-tablee-icon {
+    opacity: 0;
+    transition: opacity .3s ease, transform .3s ease; }
+  .data-tablee-cell.-header.-sortable {
+    cursor: pointer; }
+    .data-tablee-cell.-header.-sortable > .data-tablee-icon {
+      opacity: .2; }
+    .data-tablee-cell.-header.-sortable:hover > .data-tablee-icon {
+      opacity: .8; }
+    .data-tablee-cell.-header.-sortable:active > .data-tablee-icon {
+      transition: transform .1s ease;
+      transform: scale(1.5); }
+    .data-tablee-cell.-header.-sortable.-right {
+      padding-right: 6px; }
+  .data-tablee-cell.-header.-sorting > .data-tablee-icon {
+    opacity: 1; }
+
+.data-tablee-text {
+  line-height: 1; }
+

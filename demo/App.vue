@@ -1,7 +1,7 @@
 <template>
   <section>
     <!-- Simple DataTable -->
-    <c-table
+    <data-tablee
       :rows="rows"
       :cols="cols"
       sort-external
@@ -10,13 +10,13 @@
     />
 
     <!-- DataTable using slots to customize sort-icon and rows -->
-    <c-table
+    <data-tablee
       :rows="rows"
       :cols="cols"
       empty="-"
     >
       <span
-        class="c-table-icon"
+        class="data-tablee-icon"
         slot="sort-icon"
         slot-scope="{ sortment, sorted, arrow }"
       >
@@ -27,13 +27,13 @@
         slot="row"
         slot-scope="{ row, index }"
       >
-				<td class="c-table-cell -content c-table-text" >{{ index }}</td>
-        <td class="c-table-cell -content c-table-text" >{{ row.name }}</td>
-        <td class="c-table-cell -content c-table-text" >{{ row.birth_date }}</td>
-        <td class="c-table-cell -content c-table-text" >{{ row.gender }}</td>
-        <td class="c-table-cell -content c-table-text" >{{ row.address.city }}</td>
+				<td class="data-tablee-cell -content data-tablee-text" >{{ index }}</td>
+        <td class="data-tablee-cell -content data-tablee-text" >{{ row.name }}</td>
+        <td class="data-tablee-cell -content data-tablee-text" >{{ row.birth_date }}</td>
+        <td class="data-tablee-cell -content data-tablee-text" >{{ row.gender }}</td>
+        <td class="data-tablee-cell -content data-tablee-text" >{{ row.address.city }}</td>
       </template>
-    </c-table>
+    </data-tablee>
   </section>
 </template>
 
@@ -72,87 +72,4 @@
   }
 </script>
 
-<style>
-  @import url('https://fonts.googleapis.com/css?family=Nunito+Sans:400,700');
-
-  .c-table {
-    overflow: hidden;
-    border: 1px solid #eaedef;
-    border-radius: 5px;
-    border-spacing: 0;
-  }
-
-  .c-table-cell {
-    position: relative;
-    min-height: calc(27px + 4px);
-    padding: 18px;
-    border-top: 1px solid #eaedef;
-
-    .c-table-row:first-child > & { border-top: 0; }
-
-    &::before {
-      position: absolute;
-      left: 0;
-      top: 50%;
-      display: block;
-      width: 1px;
-      height: 27px;
-      background-color: #eaedef;
-      transform: translateY(-50%);
-      content: '';
-
-      &:first-child { content: none; }
-    }
-
-    &.-right { text-align: right; }
-    &.-left { text-align: left; }
-    &.-center { text-align: center; }
-		&.-clickable { cursor: pointer; }
-  }
-
-  .c-table-text {
-    font-size: 13px;
-    font-family: 'Nunito Sans', sans-serif;
-    font-weight: 400;
-    color: #5e6684;
-  }
-
-  .c-table-cell.-header {
-    background-color: #fdfdfd;
-
-    & > .c-table-text,
-    & > .c-table-icon {
-      display: inline-block;
-      font-size: 12px;
-      font-family: 'Nunito Sans', sans-serif;
-      font-weight: 700;
-      text-transform: uppercase;
-      color: #bec0d3;
-    }
-
-    & > .c-table-icon {
-      opacity: 0;
-      transition: opacity .3s ease,
-                  transform .3s ease;
-    }
-
-    &.-sortable {
-      cursor: pointer;
-
-      & > .c-table-icon { opacity: .2; }
-
-      &:hover > .c-table-icon { opacity: .8; }
-
-      &:active > .c-table-icon {
-        transition: transform .1s ease;
-        transform: scale(1.5);
-      }
-
-      &.-right { padding-right: 6px; }
-    }
-
-    &.-sorting > .c-table-icon { opacity: 1; }
-  }
-
-  .c-table-text { line-height: 1; }
-</style>
+<style src="../dist/vue-data-tablee.css"></style>

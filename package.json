@@ -1,6 +1,6 @@
 {
   "name": "vue-data-tablee",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "A very simple table component.",
   "main": "dist/vue-data-tablee.cjs.js",
   "module": "dist/vue-data-tablee.m.js",
@@ -37,14 +37,10 @@
     ]
   },
   "devDependencies": {
-    "autoprefixer": "^7.2.5",
     "bili": "^1.5.8",
-    "cssnano": "^3.10.0",
     "poi": "^9.6.12",
-    "postcss-nested": "^3.0.0",
     "rollup-plugin-vue": "^3.0.0",
     "standard": "^10.0.3",
-    "sugarss": "^1.0.1",
     "vue": "^2.5.13",
     "vue-template-compiler": "^2.5.13"
   }
