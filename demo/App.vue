@@ -1,5 +1,6 @@
 <template>
   <section>
+    <!-- Simple DataTable -->
     <c-table
       :rows="rows"
       :cols="cols"
@@ -7,6 +8,8 @@
       align="right"
       selectable
     />
+
+    <!-- DataTable using slots to customize sort-icon and rows -->
     <c-table
       :rows="rows"
       :cols="cols"
@@ -37,31 +40,33 @@
 <script>
   import users from './users'
 
+  const cols = [
+    {
+      label: 'Name',
+      field: 'name'
+    },
+    {
+      label: 'Birth Date',
+      field: 'birth_date',
+      align: 'center',
+      sort: (a, b) => new Date(a).getTime() - new Date(b).getTime() // Custom sort function
+    },
+    {
+      label: '',
+      field: 'gender',
+      sort: false
+    },
+    {
+      label: 'City',
+      field: 'address.city'
+    }
+  ]
+
   export default {
     data () {
       return {
-        rows: users,
-        cols: [
-          {
-            label: 'Name',
-            field: 'name'
-          },
-          {
-            label: 'Birth Date',
-            field: 'birth_date',
-            align: 'center',
-            sort: (a, b) => new Date(a).getTime() - new Date(b).getTime()
-          },
-          {
-            label: '',
-            field: 'gender',
-            sort: false
-          },
-          {
-            label: 'City',
-            field: 'address.city'
-          }
-        ]
+        cols,
+        rows: users
       }
     }
   }
