@@ -9,7 +9,7 @@
           type="checkbox"
           :class="[classy + '-select', '-all']"
           :checked="isSelectedAll"
-					@click="selectAll"
+					@click.prevent="selectAll"
         />
       </th>
 
@@ -39,7 +39,7 @@
 
       <th
         v-if="selectable"
-				@click="e => select(row, e)"
+				@click.prevent="e => select(row, e)"
         :class="[classy + '-cell', '-content', '-clickable']"
       >
         <input

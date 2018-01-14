@@ -12,11 +12,12 @@ const Selectable = ({ rows = 'rows' } = {}) => ({
 
   computed: {
     isSelectedAll () {
-      const isEqualsLength = this[rows].length === this.selectedRows.length
+      const isNotEmpty = !!this[rows].length
+      const isEqualsLength = isNotEmpty && this[rows].length === this.selectedRows.length
       const isSelectedAll = isEqualsLength && this[rows].every((row) => {
         return this.selectedRows.includes(row)
       })
-      return isEqualsLength && isSelectedAll
+      return isSelectedAll
     }
   },
 

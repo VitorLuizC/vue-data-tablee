@@ -1,5 +1,5 @@
 /*!
- * vue-data-tablee v0.10.1
+ * vue-data-tablee v0.10.2
  * (c) 2018-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
@@ -152,11 +152,12 @@ var Selectable = function (ref) {
     isSelectedAll: function isSelectedAll() {
       var this$1 = this;
 
-      var isEqualsLength = this[rows].length === this.selectedRows.length;
+      var isNotEmpty = !!this[rows].length;
+      var isEqualsLength = isNotEmpty && this[rows].length === this.selectedRows.length;
       var isSelectedAll = isEqualsLength && this[rows].every(function (row) {
         return this$1.selectedRows.includes(row);
       });
-      return isEqualsLength && isSelectedAll;
+      return isSelectedAll;
     }
   },
 
@@ -386,12 +387,16 @@ var Sortable = function (ref) {
 };
 
 var DataTable = { render: function () {
-    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('table', { class: _vm.classy }, [_c('tr', { class: [_vm.classy + '-row', '-header'] }, [_vm.selectable ? _c('th', { class: [_vm.classy + '-cell', '-header', '-clickable'] }, [_c('input', { class: [_vm.classy + '-select', '-all'], attrs: { "type": "checkbox" }, domProps: { "checked": _vm.isSelectedAll }, on: { "click": _vm.selectAll } })]) : _vm._e(), _vm._v(" "), _vm._l(_vm.cols, function (col, index) {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('table', { class: _vm.classy }, [_c('tr', { class: [_vm.classy + '-row', '-header'] }, [_vm.selectable ? _c('th', { class: [_vm.classy + '-cell', '-header', '-clickable'] }, [_c('input', { class: [_vm.classy + '-select', '-all'], attrs: { "type": "checkbox" }, domProps: { "checked": _vm.isSelectedAll }, on: { "click": function ($event) {
+          $event.preventDefault();_vm.selectAll($event);
+        } } })]) : _vm._e(), _vm._v(" "), _vm._l(_vm.cols, function (col, index) {
       return _c('th', { key: index, class: _vm.getClasses(index, 'header'), on: { "click": function ($event) {
             _vm.$setSorter(index);
           } } }, [_c('span', { class: _vm.classy + '-text' }, [_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]), _vm._v(" "), _vm._t("sort-icon", [_c('span', { class: _vm.classy + '-icon' }, [_vm._v(_vm._s(_vm.$getArrow(index)))])], { sortment: _vm.sortment, sorted: _vm.$isSorting(index), arrow: _vm.$getArrow(index) })], 2);
     })], 2), _vm._v(" "), _vm._l(_vm.$sortedRows, function (row, rowIndex) {
-      return _c('tr', { key: rowIndex, class: [_vm.classy + '-row', '-content'] }, [_vm.selectable ? _c('th', { class: [_vm.classy + '-cell', '-content', '-clickable'], on: { "click": function (e) { return _vm.select(row, e); } } }, [_c('input', { class: [_vm.classy + '-select', '-all'], attrs: { "type": "checkbox" }, domProps: { "checked": _vm.isSelected(row) } })]) : _vm._e(), _vm._v(" "), _vm._t("row", _vm._l(_vm.cols, function (col, colIndex) {
+      return _c('tr', { key: rowIndex, class: [_vm.classy + '-row', '-content'] }, [_vm.selectable ? _c('th', { class: [_vm.classy + '-cell', '-content', '-clickable'], on: { "click": function ($event) {
+            $event.preventDefault();(function (e) { return _vm.select(row, e); })($event);
+          } } }, [_c('input', { class: [_vm.classy + '-select', '-all'], attrs: { "type": "checkbox" }, domProps: { "checked": _vm.isSelected(row) } })]) : _vm._e(), _vm._v(" "), _vm._t("row", _vm._l(_vm.cols, function (col, colIndex) {
         return _c('td', { key: colIndex, class: _vm.getClasses(colIndex, 'content') }, [_c('span', { class: _vm.classy + '-text' }, [_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])]);
       }), { row: row, index: rowIndex })], 2);
     })], 2);
