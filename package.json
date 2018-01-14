@@ -38,7 +38,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^7.2.5",
-    "bili": "^1.5.6",
+    "bili": "^1.5.8",
     "cssnano": "^3.10.0",
     "poi": "^9.6.12",
     "postcss-nested": "^3.0.0",

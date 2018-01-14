@@ -385,8 +385,18 @@ var Sortable = function (ref) {
 });
 };
 
-var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-header', '-clickable']},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelectedAll},on:{"click":_vm.selectAll}})]):_vm._e(),_vm._v(" "),_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.$setSorter(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.$getArrow(index)))])],{sortment:_vm.sortment,sorted:_vm.$isSorting(index),arrow:_vm.$getArrow(index)})],2)})],2),_vm._v(" "),_vm._l((_vm.$sortedRows),function(row,rowIndex){return _c('tr',{key:rowIndex,class:[_vm.classy + '-row', '-content']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-content', '-clickable'],on:{"click":e => _vm.select(row, e)}},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelected(row)}})]):_vm._e(),_vm._v(" "),_vm._t("row",_vm._l((_vm.cols),function(col,colIndex){return _c('td',{key:colIndex,class:_vm.getClasses(colIndex, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])])}),{row:row,index:rowIndex})],2)})],2)},staticRenderFns: [],
-  mixins: [ Sortable(), Alignable(), Selectable() ],
+var DataTable = { render: function () {
+    var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('table', { class: _vm.classy }, [_c('tr', { class: [_vm.classy + '-row', '-header'] }, [_vm.selectable ? _c('th', { class: [_vm.classy + '-cell', '-header', '-clickable'] }, [_c('input', { class: [_vm.classy + '-select', '-all'], attrs: { "type": "checkbox" }, domProps: { "checked": _vm.isSelectedAll }, on: { "click": _vm.selectAll } })]) : _vm._e(), _vm._v(" "), _vm._l(_vm.cols, function (col, index) {
+      return _c('th', { key: index, class: _vm.getClasses(index, 'header'), on: { "click": function ($event) {
+            _vm.$setSorter(index);
+          } } }, [_c('span', { class: _vm.classy + '-text' }, [_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]), _vm._v(" "), _vm._t("sort-icon", [_c('span', { class: _vm.classy + '-icon' }, [_vm._v(_vm._s(_vm.$getArrow(index)))])], { sortment: _vm.sortment, sorted: _vm.$isSorting(index), arrow: _vm.$getArrow(index) })], 2);
+    })], 2), _vm._v(" "), _vm._l(_vm.$sortedRows, function (row, rowIndex) {
+      return _c('tr', { key: rowIndex, class: [_vm.classy + '-row', '-content'] }, [_vm.selectable ? _c('th', { class: [_vm.classy + '-cell', '-content', '-clickable'], on: { "click": function (e) { return _vm.select(row, e); } } }, [_c('input', { class: [_vm.classy + '-select', '-all'], attrs: { "type": "checkbox" }, domProps: { "checked": _vm.isSelected(row) } })]) : _vm._e(), _vm._v(" "), _vm._t("row", _vm._l(_vm.cols, function (col, colIndex) {
+        return _c('td', { key: colIndex, class: _vm.getClasses(colIndex, 'content') }, [_c('span', { class: _vm.classy + '-text' }, [_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])]);
+      }), { row: row, index: rowIndex })], 2);
+    })], 2);
+  }, staticRenderFns: [],
+  mixins: [Sortable(), Alignable(), Selectable()],
   props: {
     /**
      * List of col's data.
@@ -415,10 +425,10 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     }
   },
 
-  data () {
+  data: function data() {
     return {
       classy: this.$options.name || 'data-tablee'
-    }
+    };
   },
 
   methods: {
@@ -428,15 +438,10 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
      * @param {('header'|'content')} type
      * @returns {(string|Object.<string, boolean>)[]}
      */
-    getClasses (index, type) {
-      const classes = [
-        this.classy + '-cell',
-        '-' + type,
-        '-' + this.$getAlignment(index),
-        ...this.$getSortClasses(index)
-      ];
+    getClasses: function getClasses(index, type) {
+      var classes = [this.classy + '-cell', '-' + type, '-' + this.$getAlignment(index) ].concat( this.$getSortClasses(index));
 
-      return classes
+      return classes;
     },
 
     /**
@@ -453,9 +458,12 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
    * @param {Vue} Vue
    * @param {{ name: string }} [options]
    */
-  install (Vue, { name = 'data-tablee' } = {}) {
+  install: function install(Vue, ref) {
+    if ( ref === void 0 ) ref = {};
+    var name = ref.name; if ( name === void 0 ) name = 'data-tablee';
+
     Vue.component(name, this);
   }
-}
+};
 
 export default DataTable;
