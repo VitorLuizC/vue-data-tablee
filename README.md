@@ -42,30 +42,30 @@ export default {
 
 ## Component Props
 
-Name         | Type                                   | Default  | About
-----         | ----                                   | -------  | -----
-cols         | `Array.<Col>`                          | `[]`     | [Cols][4] list.
-rows         | `Array.<Object>`                       | `[]`     | Rows list.
-align        | `'center' | 'right' | 'left'`          | `'left'` | Global column alignment option.
-empty        | `String`                               | `''`     | Empty cell's character.
-selectable   | `Boolean`                              | `false`  | Add checkbox column to select a row. It emits event on change
-sort         | `Boolean | Function.(a:*, b:*):Number` | `true`   | Global sort option. Could enable/disable sort or use a custom [sort function][5].
-sortExternal | `Boolean`                              | `false`  | Only change sort and arrow. Useful to sort outsite component.
+Name         | Type                                     | Default  | About
+----         | ----                                     | -------  | -----
+cols         | `Array.<Col>`                            | `[]`     | [Cols][4] list.
+rows         | `Array.<Object>`                         | `[]`     | Rows list.
+align        | `'center' \| 'right' \| 'left'`          | `'left'` | Global column alignment option.
+empty        | `String`                                 | `''`     | Empty cell's character.
+selectable   | `Boolean`                                | `false`  | Add checkbox column to select a row. It emits event on change
+sort         | `Boolean \| Function.(a:*, b:*):Number`  | `true`   | Global sort option. Could enable/disable sort or use a custom [sort function][5].
+sortExternal | `Boolean`                                | `false`  | Only change sort and arrow. Useful to sort outsite component.
 ## Cols properties
 
-Name  | Type                                   | About
------ | ----                                   | -----
-label | `String`                               | Column label (`<th>{{ label }}</th>`).
-field | `String`                               | Property name, or property path. Ex `'user.contact.phone'`.
-align | `'center' | 'right' | 'left'`          | Column alignment option. Stronger than global sort
-sort  | `Boolean | Function.(a:*, b:*):Number` | Could enable/disable column sort or use a custom [sort function][5]. Stronger than global sort
+Name  | Type                                     | About
+----- | ----                                     | -----
+label | `String`                                 | Column label (`<th>{{ label }}</th>`).
+field | `String`                                 | Property name, or property path. Ex `'user.contact.phone'`.
+align | `'center' \| 'right' \| 'left'`          | Column alignment option. Stronger than global sort
+sort  | `Boolean \| Function.(a:*, b:*):Number`  | Could enable/disable column sort or use a custom [sort function][5]. Stronger than global sort
 
 ## Events
 
-Name   | Payload                                               | About
------  | -------                                               | -----
-select | `Array.<Object>`                                      | Emitted on select row (`selectable` option).
-sort   | `{ column:Col, sortment:('ascending'|'descending') }` | Emitted on sort change.
+Name   | Payload                                                | About
+-----  | -------                                                | -----
+select | `Array.<Object>`                                       | Emitted on select row (`selectable` option).
+sort   | `{ column:Col, sortment:('ascending'\|'descending') }` | Emitted on sort change.
 
 ## License
 
