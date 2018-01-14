@@ -1,20 +1,18 @@
 /*!
  * vue-data-tablee v0.10.1
- * (c) 2017-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
+ * (c) 2018-present Vitor Cavalcanti <vitorluizc@outlook.com> (https://vitorluizc.github.io)
  * Released under the MIT License.
  */
-'use strict';
-
 /**
  * Check value's constructor name.
  * @param {*} value
  * @param {string} constructor
  * @returns {boolean}
  */
-var is = function (value, constructor) {
+var is = (function (value, constructor) {
   var is = Object.prototype.toString.call(value) === ("[object " + constructor + "]");
-  return is
-};
+  return is;
+});
 
 var DELIMITER = '.';
 
@@ -39,7 +37,7 @@ var getProperties = function (path) { return is(path, 'String') ? path.split(DEL
 var getValue = function (object, property) {
   var isReachable = is(object, 'Object') && object.hasOwnProperty(property);
   var value = isReachable ? object[property] : null;
-  return value
+  return value;
 };
 
 /**
@@ -51,7 +49,7 @@ var getValue = function (object, property) {
 var get = function (object, path) {
   var properties = getProperties(path);
   var value = properties.reduce(getValue, object);
-  return value
+  return value;
 };
 
 var DEFAULT_VALIDATE = function (value) { return !is(value, 'Null'); };
@@ -68,7 +66,7 @@ var getProperty = function (name, objects, validate) {
 
   var properties = objects.map(function (object) { return get(object, name); });
   var property = properties.find(function (property) { return validate(property); });
-  return property
+  return property;
 };
 
 /**
@@ -101,7 +99,7 @@ var isAlignment = includes(ALIGNMENTS);
 var isContent = function (value) {
   var isObject = function (value) { return is(value, 'Object'); };
   var isContent = is(value, 'Array') && value.every(isObject);
-  return isContent
+  return isContent;
 };
 
 var Alignable = function (ref) {
@@ -125,10 +123,10 @@ var Alignable = function (ref) {
      * @param {number} index
      * @returns {('right'|'left'|'center')}
      */
-    $getAlignment: function $getAlignment (index) {
+    $getAlignment: function $getAlignment(index) {
       var col = this[cols][index];
       var alignment = getProperty('align', [col, this._props], isAlignment);
-      return alignment
+      return alignment;
     }
   }
 });
@@ -143,27 +141,27 @@ var Selectable = function (ref) {
     selectable: Boolean
   },
 
-  data: function data () {
+  data: function data() {
     return {
       selectedRows: [],
       lastClicked: undefined
-    }
+    };
   },
 
   computed: {
-    isSelectedAll: function isSelectedAll () {
+    isSelectedAll: function isSelectedAll() {
       var this$1 = this;
 
       var isEqualsLength = this[rows].length === this.selectedRows.length;
       var isSelectedAll = isEqualsLength && this[rows].every(function (row) {
-        return this$1.selectedRows.includes(row)
+        return this$1.selectedRows.includes(row);
       });
-      return isEqualsLength && isSelectedAll
+      return isEqualsLength && isSelectedAll;
     }
   },
 
   watch: {
-    rows: function rows () {
+    rows: function rows() {
       this.selectedRows = [];
     }
   },
@@ -174,9 +172,9 @@ var Selectable = function (ref) {
      * @param {object} row
      * @returns {boolean}
      */
-    isSelected: function isSelected (row) {
+    isSelected: function isSelected(row) {
       var isSelected = !!this.selectedRows.find(function (selected) { return selected === row; });
-      return isSelected
+      return isSelected;
     },
 
     /**
@@ -184,13 +182,11 @@ var Selectable = function (ref) {
      * @param {object} row
      * @param {object} event
      */
-    select: function select (row, event) {
+    select: function select(row, event) {
       if (event.shiftKey && this.lastClicked !== row) {
         this.multipleSelect(row);
       } else {
-        this.selectedRows = this.isSelected(row)
-          ? this.selectedRows.filter(function (selected) { return selected !== row; })
-          : this.selectedRows.concat( [row] );
+        this.selectedRows = this.isSelected(row) ? this.selectedRows.filter(function (selected) { return selected !== row; }) : this.selectedRows.concat( [row]);
       }
       this.lastClicked = row;
       this.emitSelected();
@@ -200,7 +196,7 @@ var Selectable = function (ref) {
      * Set multiple rows active.
      * @param {object} row
      */
-    multipleSelect: function multipleSelect (row) {
+    multipleSelect: function multipleSelect(row) {
       var s1 = this[rows].indexOf(row);
       var s2 = this[rows].indexOf(this.lastClicked);
       var ref = [s1, s2].sort();
@@ -214,7 +210,7 @@ var Selectable = function (ref) {
      * Set all rows active.
      * @param {Event} event
      */
-    selectAll: function selectAll (event) {
+    selectAll: function selectAll(event) {
       this.selectedRows = this.isSelectedAll ? [] : [].concat( this[rows] );
       this.emitSelected();
     },
@@ -222,7 +218,7 @@ var Selectable = function (ref) {
     /**
      * Emit selected rows.
      */
-    emitSelected: function emitSelected () {
+    emitSelected: function emitSelected() {
       this.$emit('select', this.selectedRows);
     }
   }
@@ -241,9 +237,9 @@ var DEFAULT_SORT = function (a, b) {
 
   var isNumbers = is(a, 'Number') && is(b, 'Number');
   if (isNumbers) {
-    return a - b
+    return a - b;
   } else {
-    return String(a || '').localeCompare(String(b || ''))
+    return String(a || '').localeCompare(String(b || ''));
   }
 };
 
@@ -268,24 +264,24 @@ var Sortable = function (ref) {
     sortExternal: Boolean
   },
 
-  data: function data () {
+  data: function data() {
     return {
       sorter: null,
       sortment: 'ascending'
-    }
+    };
   },
 
   computed: {
-    $sortedRows: function $sortedRows () {
+    $sortedRows: function $sortedRows() {
       var this$1 = this;
 
       var isSorted = is(this.sorter, 'Number');
       if (!isSorted || this.sortExternal) {
-        return [].concat( this[rows] )
+        return [].concat( this[rows] );
       }
 
       var sorted = [].concat( this[rows] ).sort(function (a, b) { return this$1.$sort(a, b); });
-      return sorted
+      return sorted;
     }
   },
 
@@ -295,9 +291,9 @@ var Sortable = function (ref) {
      * @param {number} index
      * @returns {boolean}
      */
-    $isSorting: function $isSorting (index) {
+    $isSorting: function $isSorting(index) {
       var isSorting = this.sorter === index;
-      return isSorting
+      return isSorting;
     },
 
     /**
@@ -305,9 +301,9 @@ var Sortable = function (ref) {
      * @param {number} index
      * @returns {boolean}
      */
-    $isSortable: function $isSortable (index) {
+    $isSortable: function $isSortable(index) {
       var isSortable = !!this.$getSort(index);
-      return isSortable
+      return isSortable;
     },
 
     /**
@@ -315,10 +311,10 @@ var Sortable = function (ref) {
      * @param {number} index
      * @returns {(boolean|function)}
      */
-    $getSort: function $getSort (index) {
+    $getSort: function $getSort(index) {
       var col = this[cols][index];
       var sort = getProperty('sort', [col, this._props]);
-      return sort
+      return sort;
     },
 
     /**
@@ -326,18 +322,17 @@ var Sortable = function (ref) {
      * @param {number} index
      * @returns {(string|Array.<string, boolean>)[]}
      */
-    $getSortClasses: function $getSortClasses (index) {
+    $getSortClasses: function $getSortClasses(index) {
+      var obj;
+
       var isSortable = this.$isSortable(index);
       var isSorting = this.$isSorting(index);
-      var classes = [
-        ( obj = {
-          '-sorting': isSorting,
-          '-sortable': isSortable,
-          '-unsortable': !isSortable
-        }, obj['-' + this.sortment] = isSorting, obj )
-      ];
-      var obj;
-      return classes
+      var classes = [( obj = {
+        '-sorting': isSorting,
+        '-sortable': isSortable,
+        '-unsortable': !isSortable
+      }, obj['-' + this.sortment] = isSorting, obj)];
+      return classes;
     },
 
     /**
@@ -345,23 +340,23 @@ var Sortable = function (ref) {
      * @param {number} index
      * @returns {('▼'|'▲'|'')}
      */
-    $getArrow: function $getArrow (index) {
+    $getArrow: function $getArrow(index) {
       var isSorting = this.$isSorting(index);
-      if (!isSorting) { return '▲' }
+      if (!isSorting) { return '▲'; }
       var arrow = this.sortment === 'ascending' ? '▲' : '▼';
-      return arrow
+      return arrow;
     },
 
     /**
      * Sort a column or change its sortment.
      * @param {number} index
      */
-    $setSorter: function $setSorter (index) {
+    $setSorter: function $setSorter(index) {
       var isSorter = this.$isSorting(index);
       var isSortable = this.$isSortable(index);
 
       if (!isSortable) {
-        return
+        return;
       }
 
       var column = this[cols][index];
@@ -378,19 +373,19 @@ var Sortable = function (ref) {
      * @param {object} rowB
      * @returns {number}
      */
-    $sort: function $sort (rowA, rowB) {
+    $sort: function $sort(rowA, rowB) {
       var custom = this.$getSort(this.sorter);
       var sort = is(custom, 'Function') ? custom : DEFAULT_SORT;
       var path = this[cols][this.sorter].field;
       var number = sort(get(rowA, path), get(rowB, path));
       var result = number * (this.sortment === 'ascending' ? 1 : -1);
-      return result
+      return result;
     }
   }
 });
 };
 
-var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-header', '-clickable']},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelectedAll},on:{"click":_vm.selectAll}})]):_vm._e(),_vm._v(" "),_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.$setSorter(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.$getArrow(index)))])],{sortment:_vm.sortment,sorted:_vm.$isSorting(index),arrow:_vm.$getArrow(index)})],2)})],2),_vm._v(" "),_vm._l((_vm.$sortedRows),function(row,rowIndex){return _c('tr',{key:rowIndex,class:[_vm.classy + '-row', '-content']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-content', '-clickable'],on:{"click":function (e) { return _vm.select(row, e); }}},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelected(row)}})]):_vm._e(),_vm._v(" "),_vm._t("row",_vm._l((_vm.cols),function(col,colIndex){return _c('td',{key:colIndex,class:_vm.getClasses(colIndex, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])])}),{row:row,index:rowIndex})],2)})],2)},staticRenderFns: [],
+var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;return _c('table',{class:_vm.classy},[_c('tr',{class:[_vm.classy + '-row', '-header']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-header', '-clickable']},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelectedAll},on:{"click":_vm.selectAll}})]):_vm._e(),_vm._v(" "),_vm._l((_vm.cols),function(col,index){return _c('th',{key:index,class:_vm.getClasses(index, 'header'),on:{"click":function($event){_vm.$setSorter(index);}}},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]),_vm._v(" "),_vm._t("sort-icon",[_c('span',{class:_vm.classy + '-icon'},[_vm._v(_vm._s(_vm.$getArrow(index)))])],{sortment:_vm.sortment,sorted:_vm.$isSorting(index),arrow:_vm.$getArrow(index)})],2)})],2),_vm._v(" "),_vm._l((_vm.$sortedRows),function(row,rowIndex){return _c('tr',{key:rowIndex,class:[_vm.classy + '-row', '-content']},[(_vm.selectable)?_c('th',{class:[_vm.classy + '-cell', '-content', '-clickable'],on:{"click":e => _vm.select(row, e)}},[_c('input',{class:[_vm.classy + '-select', '-all'],attrs:{"type":"checkbox"},domProps:{"checked":_vm.isSelected(row)}})]):_vm._e(),_vm._v(" "),_vm._t("row",_vm._l((_vm.cols),function(col,colIndex){return _c('td',{key:colIndex,class:_vm.getClasses(colIndex, 'content')},[_c('span',{class:_vm.classy + '-text'},[_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])])}),{row:row,index:rowIndex})],2)})],2)},staticRenderFns: [],
   mixins: [ Sortable(), Alignable(), Selectable() ],
   props: {
     /**
@@ -420,7 +415,7 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
     }
   },
 
-  data: function data () {
+  data () {
     return {
       classy: this.$options.name || 'data-tablee'
     }
@@ -433,12 +428,13 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
      * @param {('header'|'content')} type
      * @returns {(string|Object.<string, boolean>)[]}
      */
-    getClasses: function getClasses (index, type) {
-      var classes = [
+    getClasses (index, type) {
+      const classes = [
         this.classy + '-cell',
         '-' + type,
-        '-' + this.$getAlignment(index) ].concat( this.$getSortClasses(index)
-      );
+        '-' + this.$getAlignment(index),
+        ...this.$getSortClasses(index)
+      ];
 
       return classes
     },
@@ -457,12 +453,9 @@ var DataTable = {render: function(){var _vm=this;var _h=_vm.$createElement;var _
    * @param {Vue} Vue
    * @param {{ name: string }} [options]
    */
-  install: function install (Vue, ref) {
-    if ( ref === void 0 ) ref = {};
-    var name = ref.name; if ( name === void 0 ) name = 'data-tablee';
-
+  install (Vue, { name = 'data-tablee' } = {}) {
     Vue.component(name, this);
   }
-};
+}
 
-module.exports = DataTable;
+export default DataTable;
