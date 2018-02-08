@@ -3,7 +3,7 @@
   "version": "0.11.0",
   "description": "A very simple table component.",
   "main": "dist/vue-data-tablee.cjs.js",
-  "module": "dist/vue-data-tablee.m.js",
+  "module": "dist/vue-data-tablee.es.js",
   "scripts": {
     "test": "standard",
     "start": "poi demo/index.js",
@@ -37,8 +37,8 @@
     ]
   },
   "devDependencies": {
-    "bili": "^1.5.8",
-    "poi": "^9.6.12",
+    "bili": "^2.2.6",
+    "poi": "^9.6.13",
     "rollup-plugin-vue": "^3.0.0",
     "standard": "^10.0.3",
     "vue": "^2.5.13",
