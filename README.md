@@ -61,12 +61,16 @@ sort         | `Boolean \| Function.(a:*, b:*):Number`  | `true`   | Global sort
 sortExternal | `Boolean`                                | `false`  | Only change sort and arrow. Useful to sort outsite component.
 ## Cols properties
 
-Name  | Type                                     | About
------ | ----                                     | -----
-label | `String`                                 | Column label (`<th>{{ label }}</th>`).
-field | `String`                                 | Property name, or property path. Ex `'user.contact.phone'`.
-align | `'center' \| 'right' \| 'left'`          | Column alignment option. Stronger than global sort
-sort  | `Boolean \| Function.(a:*, b:*):Number`  | Could enable/disable column sort or use a custom [sort function][5]. Stronger than global sort
+Name         | Type                                     | About
+----         | ----                                     | -----
+label        | `String`                                 | Column label (`<th>{{ label }}</th>`).
+field        | `String`                                 | Property name, or property path. Ex `'user.contact.phone'`.
+align        | `'center' \| 'right' \| 'left'`          | Column alignment option. Stronger than global sort
+width        | `Number`                                 | Column width.
+hidden       | `Boolean`                                | Defines if column is hidden.
+headerClass  | `String`                                 | Adds this class to column header cell.
+contentClass | `String`                                 | Adds this class to columns content cells.
+sort         | `Boolean \| Function.(a:*, b:*):Number`  | Could enable/disable column sort or use a custom [sort function][5]. Stronger than global sort
 
 ## Events
 

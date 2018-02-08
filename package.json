@@ -1,6 +1,6 @@
 {
   "name": "vue-data-tablee",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "description": "A very simple table component.",
   "main": "dist/vue-data-tablee.cjs.js",
   "module": "dist/vue-data-tablee.es.js",
