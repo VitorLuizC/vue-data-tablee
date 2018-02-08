@@ -9,7 +9,7 @@
           type="checkbox"
           :class="[classy + '-select', '-all']"
           :checked="isSelectedAll"
-					@click.prevent="selectAll"
+          @click.prevent="selectAll"
         />
       </th>
 
@@ -39,7 +39,7 @@
 
       <th
         v-if="selectable"
-				@click.prevent="e => select(row, e)"
+        @click.prevent="e => select(row, e)"
         :class="[classy + '-cell', '-content', '-clickable']"
       >
         <input
@@ -180,7 +180,7 @@
     &.-right { text-align: right; }
     &.-left { text-align: left; }
     &.-center { text-align: center; }
-		&.-clickable { cursor: pointer; }
+    &.-clickable { cursor: pointer; }
   }
 
   .data-tablee-text {
