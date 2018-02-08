@@ -17,6 +17,8 @@
         v-for="(col, index) in cols"
         :key="index"
         :class="getClasses(index, 'header')"
+        :style="getStyle(col)"
+        :width="col.width || null"
         @click="$setSorter(index)"
       >
         <span :class="classy + '-text'">{{ getText(col, 'label') || empty }}</span>
@@ -39,8 +41,8 @@
 
       <th
         v-if="selectable"
-        @click.prevent="e => select(row, e)"
         :class="[classy + '-cell', '-content', '-clickable']"
+        @click.prevent="select(row, $event)"
       >
         <input
           type="checkbox"
@@ -54,6 +56,8 @@
           v-for="(col, colIndex) in cols"
           :key="colIndex"
           :class="getClasses(colIndex, 'content')"
+          :style="getStyle(col)"
+          :width="col.width || null"
         >
           <span :class="classy + '-text'">{{ getText(row, col.field) || empty }}</span>
         </td>
@@ -115,14 +119,29 @@
        * @returns {(string|Object.<string, boolean>)[]}
        */
       getClasses (index, type) {
+        const custom = this.cols[index][type + 'Class']
         const classes = [
-          this.classy + '-cell',
+          custom,
           '-' + type,
-          '-' + this.$getAlignment(index),
-          ...this.$getSortClasses(index)
+          this.classy + '-cell',
+          this.$getSortClasses(index),
+          '-' + this.$getAlignment(index)
         ]
 
         return classes
+      },
+
+      /**
+       * Get cell's styles.
+       * @param {{ hidden: boolean, align: align }} col
+       * @returns {CSSStyleDeclaration}
+       */
+      getStyle (col) {
+        const style = {
+          textAlign: col.align || this.align,
+          display: col.hidden ? 'none' : undefined,
+        }
+        return style
       },
 
       /**

@@ -91,14 +91,12 @@ const Sortable = ({ cols = 'cols', rows = 'rows' } = {}) => ({
     $getSortClasses (index) {
       const isSortable = this.$isSortable(index)
       const isSorting = this.$isSorting(index)
-      const classes = [
-        {
-          '-sorting': isSorting,
-          '-sortable': isSortable,
-          '-unsortable': !isSortable,
-          ['-' + this.sortment]: isSorting
-        }
-      ]
+      const classes = {
+        '-sorting': isSorting,
+        '-sortable': isSortable,
+        '-unsortable': !isSortable,
+        ['-' + this.sortment]: isSorting
+      }
       return classes
     },
 

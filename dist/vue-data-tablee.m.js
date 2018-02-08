@@ -324,15 +324,14 @@ var Sortable = function (ref) {
      * @returns {(string|Array.<string, boolean>)[]}
      */
     $getSortClasses: function $getSortClasses(index) {
-      var obj;
-
       var isSortable = this.$isSortable(index);
       var isSorting = this.$isSorting(index);
-      var classes = [( obj = {
+      var classes = {
         '-sorting': isSorting,
         '-sortable': isSortable,
         '-unsortable': !isSortable
-      }, obj['-' + this.sortment] = isSorting, obj)];
+      };
+      classes['-' + this.sortment] = isSorting;
       return classes;
     },
 
@@ -390,14 +389,14 @@ var DataTable = { render: function () {
     var _vm = this;var _h = _vm.$createElement;var _c = _vm._self._c || _h;return _c('table', { class: _vm.classy }, [_c('tr', { class: [_vm.classy + '-row', '-header'] }, [_vm.selectable ? _c('th', { class: [_vm.classy + '-cell', '-header', '-clickable'] }, [_c('input', { class: [_vm.classy + '-select', '-all'], attrs: { "type": "checkbox" }, domProps: { "checked": _vm.isSelectedAll }, on: { "click": function ($event) {
           $event.preventDefault();_vm.selectAll($event);
         } } })]) : _vm._e(), _vm._v(" "), _vm._l(_vm.cols, function (col, index) {
-      return _c('th', { key: index, class: _vm.getClasses(index, 'header'), on: { "click": function ($event) {
+      return _c('th', { key: index, class: _vm.getClasses(index, 'header'), style: _vm.getStyle(col), attrs: { "width": col.width || null }, on: { "click": function ($event) {
             _vm.$setSorter(index);
           } } }, [_c('span', { class: _vm.classy + '-text' }, [_vm._v(_vm._s(_vm.getText(col, 'label') || _vm.empty))]), _vm._v(" "), _vm._t("sort-icon", [_c('span', { class: _vm.classy + '-icon' }, [_vm._v(_vm._s(_vm.$getArrow(index)))])], { sortment: _vm.sortment, sorted: _vm.$isSorting(index), arrow: _vm.$getArrow(index) })], 2);
     })], 2), _vm._v(" "), _vm._l(_vm.$sortedRows, function (row, rowIndex) {
       return _c('tr', { key: rowIndex, class: [_vm.classy + '-row', '-content'] }, [_vm.selectable ? _c('th', { class: [_vm.classy + '-cell', '-content', '-clickable'], on: { "click": function ($event) {
-            $event.preventDefault();(function (e) { return _vm.select(row, e); })($event);
+            $event.preventDefault();_vm.select(row, $event);
           } } }, [_c('input', { class: [_vm.classy + '-select', '-all'], attrs: { "type": "checkbox" }, domProps: { "checked": _vm.isSelected(row) } })]) : _vm._e(), _vm._v(" "), _vm._t("row", _vm._l(_vm.cols, function (col, colIndex) {
-        return _c('td', { key: colIndex, class: _vm.getClasses(colIndex, 'content') }, [_c('span', { class: _vm.classy + '-text' }, [_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])]);
+        return _c('td', { key: colIndex, class: _vm.getClasses(colIndex, 'content'), style: _vm.getStyle(col), attrs: { "width": col.width || null } }, [_c('span', { class: _vm.classy + '-text' }, [_vm._v(_vm._s(_vm.getText(row, col.field) || _vm.empty))])]);
       }), { row: row, index: rowIndex })], 2);
     })], 2);
   }, staticRenderFns: [],
@@ -444,9 +443,23 @@ var DataTable = { render: function () {
      * @returns {(string|Object.<string, boolean>)[]}
      */
     getClasses: function getClasses(index, type) {
-      var classes = [this.classy + '-cell', '-' + type, '-' + this.$getAlignment(index) ].concat( this.$getSortClasses(index));
+      var custom = this.cols[index][type + 'Class'];
+      var classes = [custom, '-' + type, this.classy + '-cell', this.$getSortClasses(index), '-' + this.$getAlignment(index)];
 
       return classes;
+    },
+
+    /**
+     * Get cell's styles.
+     * @param {{ hidden: boolean, align: align }} col
+     * @returns {CSSStyleDeclaration}
+     */
+    getStyle: function getStyle(col) {
+      var style = {
+        textAlign: col.align || this.align,
+        display: col.hidden ? 'none' : undefined
+      };
+      return style;
     },
 
     /**
