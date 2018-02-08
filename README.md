@@ -1,6 +1,7 @@
 # Vue Data Tablee
 
 ![[JavaScript Style Guide][2]][3]
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-data-tablee.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-data-tablee?ref=badge_shield)
 
 Yeap, another Vue table component. This one is based on [vue-good-table][0], a
 simple and pretty table component.
@@ -84,3 +85,6 @@ Released under [MIT license][1].
 [3]: https://img.shields.io/badge/code_style-standard-brightgreen.svg
 [4]: /#cols-properties
 [5]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort#Description
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-data-tablee.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2FVitorLuizC%2Fvue-data-tablee?ref=badge_large)
