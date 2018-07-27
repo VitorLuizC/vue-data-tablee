@@ -4,12 +4,18 @@
   "description": "A very simple table component.",
   "main": "dist/vue-data-tablee.cjs.js",
   "module": "dist/vue-data-tablee.es.js",
+  "browser": "dist/vue-data-tablee.min.js",
   "scripts": {
     "test": "standard",
     "start": "poi demo/index.js",
-    "build": "bili src/DataTable.vue",
+    "build": "bili",
     "prepare": "npm run build && npm test"
   },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE.md"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/VitorLuizC/vue-data-tablee.git"
@@ -37,11 +43,13 @@
     ]
   },
   "devDependencies": {
-    "bili": "^3.0.4",
-    "poi": "^9.6.13",
-    "rollup-plugin-vue": "^3.0.0",
-    "standard": "^11.0.0",
-    "vue": "^2.5.13",
-    "vue-template-compiler": "^2.5.13"
+    "bili": "^3.1.2",
+    "node-sass": "^4.9.2",
+    "poi": "^10.2.9",
+    "rollup-plugin-css-only": "^0.4.0",
+    "rollup-plugin-vue": "^4.3.1",
+    "standard": "^11.0.1",
+    "vue": "^2.5.16",
+    "vue-template-compiler": "^2.5.16"
   }
 }

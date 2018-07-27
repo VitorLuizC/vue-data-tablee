@@ -10,3 +10,6 @@ node_modules/
 
 # Yarn ~srry
 yarn.lock
+
+# Generated CSS & JavaScript sources.
+dist/
