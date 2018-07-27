@@ -69,7 +69,6 @@
 <script>
   import is from './helpers/is'
   import get from './helpers/get'
-  import toggle from './helpers/toggle'
   import Alignable from './mixins/Alignable'
   import Selectable from './mixins/Selectable'
   import Sortable from './mixins/Sortable'
