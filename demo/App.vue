@@ -4,7 +4,6 @@
     <data-tablee
       :rows="rows"
       :cols="cols"
-      sort-external
       align="right"
       selectable
     />
@@ -58,7 +57,7 @@
     },
     {
       label: 'City',
-      field: 'address.city'
+      field: 'address["city"]'
     }
   ]
 
