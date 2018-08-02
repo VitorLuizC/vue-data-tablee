@@ -1,18 +1,5 @@
 import is from './is'
-
-/**
- * Get value from object path.
- * @param {object} object
- * @param {string} path
- * @returns {(number|boolean|string|null)}
- */
-export const get = (object, path) => {
-  try {
-    return new Function('o', `return o.${path}`)(object);
-  } catch (_) {
-    return null;
-  }
-}
+import get from 'object-take'
 
 const DEFAULT_VALIDATE = (value) => !is(value, 'Null')
 

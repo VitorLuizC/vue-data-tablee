@@ -51,5 +51,8 @@
     "standard": "^11.0.1",
     "vue": "^2.5.16",
     "vue-template-compiler": "^2.5.16"
+  },
+  "dependencies": {
+    "object-take": "^0.1.2"
   }
 }
