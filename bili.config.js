@@ -1,6 +1,6 @@
-const { name } = require('./package.json');
-const vue = require('rollup-plugin-vue').default;
-const css = require('rollup-plugin-css-only');
+const { name } = require('./package.json')
+const vue = require('rollup-plugin-vue').default
+const css = require('rollup-plugin-css-only')
 
 module.exports = {
   js: 'buble',
@@ -12,4 +12,4 @@ module.exports = {
     css({ output: `dist/${name}.css` }),
     vue({ css: false })
   ]
-};
+}
